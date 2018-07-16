@@ -1,0 +1,51 @@
+<section ng-controller="MainCtrl as vm">
+    <div class="container">
+        <div>
+            <h2 class="title">Система электронного документооборота is2in</h2>
+        </div>
+
+        <form class="form" name="kaseForm" ng-submit="vm.send()">
+            <div class="name-wrap wrap">
+                <div>
+                    <label for="name">Email</label>
+                </div>
+                <div>
+                    <input type="email" id="name" name="input" class="input" ng-model="email" ng-pattern="emailFormat" required>
+                </div>
+                <div class="error" ng-show="kaseForm.input.$error.required">
+                    Напишите email
+                </div>
+                <div class="error" ng-show="kaseForm.input.$error.pattern">
+                    Неправильный email
+                </div>
+            </div>
+            <div class="password-wrap wrap">
+                <div>
+                    <label for="password">Пароль</label>
+                </div>
+                <div>
+                    <input type="password" id="password" name="password" ng-model="password" class="input" ng-pattern="passwordFormat" required>
+                </div>
+                <div class="error" ng-show="kaseForm.password.$error.required">
+                    Введите пароль
+                </div>
+                <div class="error" ng-show="kaseForm.password.$error.pattern">
+                    Неправильный пароль
+                </div>
+            </div>
+
+            <div class="agreement wrap">
+                <input type="checkbox" name="agreement" id="acceptAgreement" ng-click="checked()" ng-model="firstChecked">
+                <label for="acceptAgreement">я принимаю пользовательское </label>
+            </div>
+            <div>
+                <button type="submit" class="button">Войти</button>
+            </div>
+            <!--<pre>kaseForm.input.$valid = {{kaseForm.input.$valid}}</pre><br/>-->
+            <!--<pre>kaseForm.input.$error = {{kaseForm.input.$error}}</pre><br/>-->
+            <!--<pre>kaseForm.$valid = {{kaseForm.$valid}}</pre><br/>-->
+            <!--<pre>kaseForm.$error.required = {{!!kaseForm.$error.required}}</pre><br/>-->
+            <!--<pre>kaseForm.$error.pattern = {{!!kaseForm.$error.pattern}}</pre><br/>-->
+        </form>
+    </div>
+</section>

@@ -1,0 +1,12 @@
+{
+  "name": "is2in.kase.kz",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular-material": "^1.1.10",
+    "body-parser": "^1.18.3",
+    "browser-sync": "^2.23.7",
+    "express": "^4.16.2",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
+  }
+}

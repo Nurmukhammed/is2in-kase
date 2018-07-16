@@ -1,0 +1,124 @@
+<header>
+    <div class="topbar">
+        <div class="topbar__left">
+            <a ng-href="home">
+                <img src="../images/uploads/logo-holy.svg" alt="logo">
+            </a>
+        </div>
+        <div class="topbar__right">
+            <div>
+                Система электронного документооборота с эмитентами ценных бумаг
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <div>
+            <ul class="nav">
+                <li>О проекте</li>
+                <li>Помощь</li>
+                <li>Поддержка</li>
+                <li>Активность</li>
+                <li>Эмитенты</li>
+                <li>Администрирование</li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div>
+        <h3 ng-bind="item.text"></h3>
+    </div>
+
+    <div class="form-wrap">
+        <form ng-submit="vm.form()">
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <label for="consolidate">Консолидированная</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="consolidate" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="quarter">
+                                Квартальная
+                            </label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="quarter" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="quarter">
+                                За какой квартал
+                            </label>
+                        </td>
+                        <td>
+                            <select ng-model="vm.quarter">
+                                <option value="" disabled selected>Выберите</option>
+                                <option value="I Квартал">I Квартал</option>
+                                <option value="II Квартал">II Квартал</option>
+                                <option value="III Квартал">III Квартал</option>
+                                <option value="IV Квартал">IV Квартал</option>
+                            </select>
+                            {{vm.quarter}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Год
+                        </td>
+                        <td>
+                            <div>
+                                <select
+                                        ng-model="vm.year"
+                                        ng-options="year for year in vm.years"
+                                        class="years">
+                                </select>
+                                {{vm.year}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td>Документ</td>
+                        <td>
+                            <input name="userfile"
+                                   type="file"
+                                   accept="application/pdf, application/vnd.ms-excel"
+                                   file-model="vm.pdf"
+                                   required/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Предлагаемая дата публикации</td>
+                        <td>
+                            <md-content layout-padding ng-cloak>
+                                <div layout-gt-xs="row">
+                                    <div flex-gt-xs>
+                                        <md-content>
+                                            <md-datepicker ng-model="vm.myDate" ng-change="vm.dataChanged()" md-placeholder="Enter date"></md-datepicker>
+                                        </md-content>
+                                    </div>
+                                </div>
+                            </md-content>
+                            {{vm.myDate | date: shortDate}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <button class="button button_save">Сохранить</button>
+            </div>
+        </form>
+    </div>
+
+</div>

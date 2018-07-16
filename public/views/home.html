@@ -1,0 +1,33 @@
+<header>
+    <div class="topbar">
+        <div class="topbar__left">
+            <a ng-href="home">
+                <img src="../images/uploads/logo-holy.svg" alt="logo">
+            </a>
+        </div>
+        <div class="topbar__right">
+            <div>
+                Система электронного документооборота с эмитентами ценных бумаг
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <div>
+            <ul class="nav">
+                <li>О проекте</li>
+                <li>Помощь</li>
+                <li>Поддержка</li>
+                <li>Активность</li>
+                <li>Эмитенты</li>
+                <li>Администрирование</li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<div ng-repeat="report in vm.report track by $index">
+    <div>
+        <a ng-bind="report.title" ng-href="/home/{{report}}" class="report__title report_text"></a>
+    </div>
+</div>
+
