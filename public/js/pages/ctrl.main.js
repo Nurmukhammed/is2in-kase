@@ -2,8 +2,8 @@ var app = angular.module('Main', []);
 
 app.controller('MainCtrl', function($http, $scope, $state) {
     var vm = this;
-    $scope.email = 'is2in@kase.kz';
-    $scope.password = '123';
+    // $scope.email = 'is2in@kase.kz';
+    // $scope.password = '123';
     $scope.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
     $scope.passwordFormat = /^\d+$/;
 
