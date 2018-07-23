@@ -128,10 +128,12 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
             register: vm.register
         };
         console.log(vm.send);
-        if (vm.send.change === undefined) {
-            vm.change = 'Вебирите тип изменения';
+        if (!vm.change || !vm.register) {
+            vm.response = {
+                msgType: 'Вебирите тип изменения'
+            };
         }
-        if (vm.send.change && vm.send.date && vm.send.register) {
+        if (vm.change && vm.recordDate && vm.register) {
             $state.go('home');
         }
     };

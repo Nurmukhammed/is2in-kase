@@ -139,7 +139,7 @@
             </div>
         </form>
 
-        <form ng-submit="vm.record()" ng-if="vm.report">
+        <form ng-submit="vm.record()" name="kaseRecord" ng-if="vm.report">
             <div>
                 <table>
                     <tr>
@@ -154,8 +154,8 @@
                                         Изменения
                                     </option>
                                 </select>
-                                <div ng-if="vm.change === 'Вебирите тип изменения'">
-                                    {{vm.change}}
+                                <div ng-if="!vm.change">
+                                    {{vm.response.msgType}}
                                 </div>
                             </fieldset>
                         </td>
@@ -181,8 +181,14 @@
                         <td>Каким органом зарегистрированы</td>
                         <td>
                             <fieldset>
-                                <input type="text" ng-model="vm.register" required>
+                                <input type="text" name="register" ng-model="vm.register" ng-pattern="register" required>
                             </fieldset>
+                            <div class="error" ng-show="kaseRecord.register.$error.required">
+                                Заполните поле
+                            </div>
+                            <div class="error" ng-show="kaseRecord.register.$error.pattern">
+                                Поле заполнено неверно
+                            </div>
                         </td>
                     </tr>
                 </table>
