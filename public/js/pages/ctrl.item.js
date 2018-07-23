@@ -1,13 +1,13 @@
 var app = angular.module('Item', []);
 
-app.directive('fileModel', ['$parse', function($parse) {
+app.directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs) { //scope сохраняем его в глобальную переменную vm.img это и есть
+        link: function (scope, element, attrs) { //scope сохраняем его в глобальную переменную vm.img это и есть
             var model = $parse(attrs.fileModel);
             var modelSetter = model.assign;
-            element.bind('change', function() {
-                scope.$apply(function() {
+            element.bind('change', function () {
+                scope.$apply(function () {
                     modelSetter(scope, element[0].files[0]);
                     console.log(element[0].files[0])
                 });
@@ -16,25 +16,55 @@ app.directive('fileModel', ['$parse', function($parse) {
     };
 }]);
 
-app.config(function($mdDateLocaleProvider) {
-    $mdDateLocaleProvider.formatDate = function(date) {
-        return moment(date).format('DD-MM-YYYY');
+app.config(function ($mdDateLocaleProvider) {
+    $mdDateLocaleProvider.formatDate = function (date) {
+        return moment(date).format('DD.MM.YYYY');
     };
 });
 
-app.controller('ItemCtrl', function($http, $scope, $state, $log) {
+app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     var vm = this;
     $scope.item = JSON.parse($state.params.item);
-    console.log(JSON.parse($state.params.item));
+    console.log($scope.item);
+    $scope.text = $scope.item.text;
+    $scope.role = $scope.item.template;
+    $scope.issueNumber = /[0-9]/g;
+    $scope.issueCode = new RegExp("^[a-zA-Z0-9\\s]+$");
+    if ($scope.item.template === 1) {
+        vm.item = true;
+    } else if ($scope.item.template === 2) {
+        vm.report = true;
+    } else if ($scope.item.template === 3) {
+        vm.meeting = true;
+    } else if ($scope.item.template === 4) {
+        vm.equity = true;
+    } else if ($scope.item.template === 5) {
+        vm.release = true;
+    } else if ($scope.item.template === 6) {
+        vm.message = true;
+    }
+
+    //test refactor
+
+    let key = '';
+
+    for (var prop in $scope.item) {
+        if ($scope.item.hasOwnProperty(prop)) {
+            console.log(prop + ': ' + $scope.item[prop]);
+        }
+    }
+
+    // refactor
+
+    console.log($scope.item.role);
     vm.year = null;
     vm.years = [];
 
-    for(var i = 1940; i <= 2018; i++) {
+    for (var i = 1940; i <= 2018; i++) {
         vm.years.push(i);
     }
 
     //Select Date
-
     vm.myDate = new Date();
 
     vm.minDate = new Date(
@@ -49,12 +79,11 @@ app.controller('ItemCtrl', function($http, $scope, $state, $log) {
         vm.myDate.getDate()
     );
 
-    vm.dataChanged = function() {
+    vm.dataChanged = function () {
         $log.log('Update Date: ', vm.myDate);
-        console.log(vm.myDate);
     };
 
-    vm.form = function() {
+    vm.form = function () {
         vm.item = {
             quarter: vm.quarter,
             year: vm.year,
@@ -62,23 +91,23 @@ app.controller('ItemCtrl', function($http, $scope, $state, $log) {
         };
         console.log(vm.item);
         //если данные не выбраны, то приходит сообщение
-        if(!vm.item.quarter && !vm.item.year) {
-            vm.quarter = 'Выберите квартал';
-            vm.year = 'Выберите год';
+        if (!vm.item.quarter || !vm.item.year || vm.consCheck === false || vm.quarterCheck === false) {
+            vm.reply = {
+                msgQuarter: 'Выберите квартал',
+                msgYear: 'Выберите год',
+                msgCheck: 'Поставьте галочку'
+            };
         }
 
-        if(vm.item.quarter && vm.item.year) {
+        if (vm.item.quarter && vm.item.year && vm.item.date && vm.consCheck === true && vm.quarterCheck === true) {
             $state.go('home');
         }
 
-        //Для сохранения файлов
-
+        // // Для сохранения файлов
         // var fd = new FormData();
-        // fd.append('pdf', vm.pdf); // сохраняется в виде о    бъекта
+        // fd.append('pdf', vm.fileItem); // сохраняется в виде объекта
 
-        // $state.go('report', JSON.parse(vm.item));
-
-        // $http.post('/api/upload', fd, {
+        // $http.post('/api/item', fd, {
         //     headers: {'Content-Type' : undefined}
         // }).success(function(response){
         //     console.log(response);
@@ -86,5 +115,196 @@ app.controller('ItemCtrl', function($http, $scope, $state, $log) {
         //     console.log(error);
         // })
     };
+    //For edit pages
+    vm.changeShow = false;
+    vm.recordDate = new Date();
+    vm.recordChanged = function () {
+        $log.log('Update Date: ', vm.recordDate);
+    };
+    vm.record = function () {
+        vm.send = {
+            change: vm.change,
+            date: vm.recordDate,
+            register: vm.register
+        };
+        console.log(vm.send);
+        if (vm.send.change === undefined) {
+            vm.change = 'Вебирите тип изменения';
+        }
+        if (vm.send.change && vm.send.date && vm.send.register) {
+            $state.go('home');
+        }
+    };
 
+    vm.protocols = [{
+        id: 1,
+        label: "внеочерднего"
+    }, {
+        id: 2,
+        label: "созываемое"
+    }];
+
+    vm.types = [{
+        id: 1,
+        label: 'Выписка из протокола'
+    }, {
+        id: 2,
+        label: 'Выписка из протокола 2'
+    }];
+
+    vm.holders = [{
+        id: 1,
+        label: 'Акционеров'
+    }, {
+        id: 2,
+        label: 'Акционеров 2'
+    }];
+
+    vm.board = function () {
+        if (!vm.protocol || !vm.type || !vm.holder) {
+            vm.msgProtocol = 'Выбирите тип собрания';
+            vm.msgType = 'Выбирите тип документа';
+            vm.msgHolders = 'Выбирите тип владельца';
+        }
+        vm.send = {
+            protocol: vm.protocol,
+            type: vm.type,
+            holder: vm.holder,
+            boardDate: vm.boardDate,
+            publishDate: vm.publishDate
+        };
+        console.log(vm.send);
+        if (vm.protocol && vm.type && vm.holder) {
+            $state.go('home');
+        }
+    };
+
+    vm.equityChanges = [{
+        id: 1,
+        label: 'Изменения и дополнения '
+    }, {
+        id: 1,
+        label: 'Изменения и дополнения 2'
+    }];
+
+    vm.equityIssues = [{
+        id: 1,
+        label: '1'
+    }, {
+        id: 2,
+        label: '2'
+    }];
+
+    vm.bondChanges = [{
+        id: 1,
+        label: '1'
+    }, {
+        id: 2,
+        label: '2'
+    }, {
+        id: 3,
+        label: '3'
+    }];
+
+    vm.stock = function () {
+        vm.send = {
+            equityChange: vm.equityChange,
+            equityNumber: vm.equityNumber,
+            equityCode: vm.equityCode,
+            equityIssue: vm.equityIssue,
+            bondChange: vm.bondChange,
+            equityNin: vm.equityNin,
+            equityIsin: vm.equityIsin
+        };
+        console.log(vm.send);
+        if (!vm.equityChange || !vm.equityIssue || !vm.bondChange || vm.bondCheck === false) {
+            vm.response = {
+                msgEquity: "Выберите тип",
+                msgIssue: 'Выберите номер выпуска',
+                msgBond: 'Выберите номер облигации',
+                msgCheck: 'Поставьте галочку'
+            };
+        }
+        if (vm.equityChange && vm.equityIssue && vm.bondChange && vm.bondCheck === true) {
+            $state.go('home');
+        }
+    };
+
+    vm.press = function () {
+        vm.release = {
+            pressDate: vm.pressDate,
+            pressIssuer: vm.pressIssuer,
+            releaseDate: vm.releaseDate
+        };
+        console.log(vm.release);
+        if (vm.pressIssuer) {
+            $state.go('home');
+        }
+    };
+
+    vm.typesInfo = [{
+        id: 1,
+        label: 'купонным'
+    }, {
+        id: 2,
+        label: 'купонным 2'
+    }];
+
+    vm.catsInfo = [{
+        id: 1,
+        label: "первая подкатегория категории 'Долговые ценные бумаги без рейтинговой оценки'"
+    }, {
+        id: 2,
+        label: 'первая подкатегория категории \'Долговые ценные бумаги без рейтинговой оценки 2'
+    }];
+
+    vm.infoNumbers = [{
+        id: 1,
+        label: '1'
+    }, {
+        id: 2,
+        label: '2'
+    }, {
+        id: 3,
+        label: '3'
+    }, {
+        id: 4,
+        label: '4'
+    }];
+
+    vm.infoCurrencies = [{
+        id: 1,
+        label: 'тенге'
+    }, {
+        id: 2,
+        label: 'доллар'
+    }, {
+        id: 3,
+        label: 'рубль'
+    }];
+
+    vm.info = function () {
+        vm.process = {
+            typeInfo: vm.typeInfo,
+            catInfo: vm.catInfo,
+            infoNin: vm.infoNin,
+            infoSum: vm.infoSum,
+            infoCurrency: vm.infoCurrency,
+            infoNumber: vm.infoNumber,
+            infoIsin: vm.infoIsin,
+            infoCode: vm.infoCode
+        };
+        console.log(vm.process);
+        if (!vm.typeInfo || !vm.catInfo || vm.infoNumber) {
+            vm.reply = {
+                msgType: 'Выберите тип',
+                msgCat: 'Выберите категорию',
+                msgCurrency: 'Выберите валюту',
+                msgNumber: 'Выберите номер'
+            }
+        }
+        if (vm.typeInfo && vm.catInfo && vm.infoNumber) {
+            $state.go('home');
+        }
+    };
 });

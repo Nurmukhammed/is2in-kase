@@ -4,6 +4,8 @@ app.controller('ReportCtrl', function($http, $state, $scope) {
     var vm = this;
     $scope.report = JSON.parse($state.params.report);
     $scope.groups = $scope.report.groups;
+    console.log($scope.groups);
+    console.log($scope.report);
 
     // Используй group id чтобы сделать переход
 

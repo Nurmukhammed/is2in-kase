@@ -42,6 +42,5 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
             controller : "ItemCtrl",
             controllerAs : 'vm'
         })
-
 }
 

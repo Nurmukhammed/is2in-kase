@@ -29,9 +29,8 @@
     <div>
         <h3 ng-bind="item.text"></h3>
     </div>
-
     <div class="form-wrap">
-        <form ng-submit="vm.form()">
+        <form ng-submit="vm.form()" ng-if="vm.item">
             <div>
                 <table>
                     <tr>
@@ -39,7 +38,12 @@
                             <label for="consolidate">Консолидированная</label>
                         </td>
                         <td>
-                            <input type="checkbox" id="consolidate" required>
+                            <fieldset>
+                                <input type="checkbox" id="consolidate" ng-model="vm.consCheck">
+                            </fieldset>
+                            <div ng-if="!vm.consCheck">
+                                {{vm.reply.msgCheck}}
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -49,7 +53,12 @@
                             </label>
                         </td>
                         <td>
-                            <input type="checkbox" id="quarter" required>
+                            <fieldset>
+                                <input type="checkbox" id="quarter" ng-model="vm.quarterCheck">
+                            </fieldset>
+                            <div ng-if="!vm.quarterCheck">
+                                {{vm.reply.msgCheck}}
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -59,14 +68,18 @@
                             </label>
                         </td>
                         <td>
-                            <select ng-model="vm.quarter">
-                                <option value="" disabled selected>Выберите</option>
-                                <option value="I Квартал">I Квартал</option>
-                                <option value="II Квартал">II Квартал</option>
-                                <option value="III Квартал">III Квартал</option>
-                                <option value="IV Квартал">IV Квартал</option>
-                            </select>
-                            {{vm.quarter}}
+                            <fieldset>
+                                <select ng-model="vm.quarter">
+                                    <option value="" disabled selected>Выберите</option>
+                                    <option value="I Квартал">I Квартал</option>
+                                    <option value="II Квартал">II Квартал</option>
+                                    <option value="III Квартал">III Квартал</option>
+                                    <option value="IV Квартал">IV Квартал</option>
+                                </select>
+                                <div ng-if="!vm.quarter">
+                                    {{vm.reply.msgQuarter}}
+                                </div>
+                            </fieldset>
                         </td>
                     </tr>
                     <tr>
@@ -75,12 +88,16 @@
                         </td>
                         <td>
                             <div>
-                                <select
-                                        ng-model="vm.year"
-                                        ng-options="year for year in vm.years"
-                                        class="years">
-                                </select>
-                                {{vm.year}}
+                                <fieldset>
+                                    <select
+                                            ng-model="vm.year"
+                                            ng-options="year for year in vm.years"
+                                            class="years">
+                                    </select>
+                                    <div ng-if="!vm.year">
+                                        {{vm.reply.msgYear}}
+                                    </div>
+                                </fieldset>
                             </div>
                         </td>
                     </tr>
@@ -91,11 +108,13 @@
                     <tr>
                         <td>Документ</td>
                         <td>
-                            <input name="userfile"
-                                   type="file"
-                                   accept="application/pdf, application/vnd.ms-excel"
-                                   file-model="vm.pdf"
-                                   required/>
+                            <fieldset>
+                                <input name="userfile"
+                                       type="file"
+                                       accept="application/pdf, application/vnd.ms-excel"
+                                       file-model="vm.fileItem"/>
+                            </fieldset>
+
                         </td>
                     </tr>
                     <tr>
@@ -116,9 +135,577 @@
                 </table>
             </div>
             <div>
+                <button type="submit" class="button button_save">Сохранить</button>
+            </div>
+        </form>
+
+        <form ng-submit="vm.record()" ng-if="vm.report">
+            <div>
+                <table>
+                    <tr>
+                        <td>Тип изменений</td>
+                        <td>
+                            <fieldset>
+                                <select ng-model="vm.change" ng-change="changeName()">
+                                    <option value="изменения и дополнения">
+                                        Изменения и дополнения
+                                    </option>
+                                    <option value="изменения">
+                                        Изменения
+                                    </option>
+                                </select>
+                                <div ng-if="vm.change === 'Вебирите тип изменения'">
+                                    {{vm.change}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Когда зарегистрированы</td>
+                        <td>
+                            <fieldset>
+                                <md-content layout-padding ng-cloak>
+                                    <div layout-gt-xs="row">
+                                        <div flex-gt-xs>
+                                            <md-content>
+                                                <md-datepicker ng-model="vm.recordDate" ng-change="vm.recordChanged()" md-placeholder="Enter date"></md-datepicker>
+                                            </md-content>
+                                        </div>
+                                    </div>
+                                </md-content>
+                            </fieldset>
+                            <!--{{vm.recordDate | date: shortDate}}-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Каким органом зарегистрированы</td>
+                        <td>
+                            <fieldset>
+                                <input type="text" ng-model="vm.register" required>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td>Документ</td>
+                        <td>
+                            <fieldset>
+                                <input name="userfile"
+                                       type="file"
+                                       accept="application/pdf, application/vnd.ms-excel"
+                                       file-model="vm.fileRecord"
+                                       required/>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <fieldset>
+                    <button type="submit" class="button button_save">Сохранить</button>
+                </fieldset>
+            </div>
+        </form>
+
+        <form ng-submit="vm.board()" ng-if="vm.meeting">
+            <div>
+                <table>
+                    <tr>
+                        <td>Тип собрания</td>
+                        <td>
+                            <fieldset>
+                                <select ng-model="vm.protocol" ng-options="value.id as value.label for value in vm.protocols">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.protocol">
+                                    {{vm.msgProtocol}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Тип документа</td>
+                        <td>
+                            <fieldset >
+                                <select ng-model="vm.type" ng-options="value.id as value.label for value in vm.types">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.type">
+                                    {{vm.msgType}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Когда состоялось
+                        </td>
+                        <td>
+                            <fieldset>
+                                <md-content layout-padding ng-cloak>
+                                    <div layout-gt-xs="row">
+                                        <div flex-gt-xs>
+                                            <md-content>
+                                                <md-datepicker ng-model="vm.boardDate" ng-change="vm.boardChange()" md-placeholder="Enter date"></md-datepicker>
+                                            </md-content>
+                                        </div>
+                                    </div>
+                                </md-content>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Тип владельцов компании
+                        </td>
+                        <td>
+                            <!--<fieldset>-->
+                                <!--<select ng-model="vm.holders">-->
+                                    <!--<option value="акционеров">Акционеров</option>-->
+                                <!--</select>-->
+                            <!--</fieldset>-->
+                            <!--<div ng-if="vm.holders === 'Вебирите тип владельца'">-->
+                                <!--{{vm.holders}}-->
+                            <!--</div>-->
+                            <fieldset>
+                                <select ng-model="vm.holder" ng-options="value.id as value.label for value in vm.holders">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.holder">
+                                    {{vm.msgHolders}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td>Документ</td>
+                        <td>
+                            <fieldset>
+                                <input name="userfile"
+                                       type="file"
+                                       accept="application/pdf, application/vnd.ms-excel"
+                                       file-model="vm.fileBoard"/>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Предлагаемая дата публикации</td>
+                        <td>
+                            <fieldset>
+                                <md-content layout-padding ng-cloak>
+                                    <div layout-gt-xs="row">
+                                        <div flex-gt-xs>
+                                            <md-content>
+                                                <md-datepicker ng-model="vm.publishDate" ng-change="vm.publishChange()" md-placeholder="Enter date"></md-datepicker>
+                                            </md-content>
+                                        </div>
+                                    </div>
+                                </md-content>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
                 <button class="button button_save">Сохранить</button>
             </div>
         </form>
-    </div>
 
+        <form ng-submit="vm.stock()" name="kaseStock" ng-if="vm.equity">
+            <div>
+                <table>
+                    <tr>
+                        <td>Тип изменений</td>
+                        <td>
+                            <fieldset>
+                                <select ng-model="vm.equityChange" ng-options="value.id as value.label for value in vm.equityChanges">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.equityChange">
+                                    {{vm.response.msgEquity}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Номер изменений</td>
+                        <td>
+                            <fieldset>
+                                <input type="text" name="input" ng-model="vm.equityNumber" ng-pattern="issueNumber" required>
+                            </fieldset>
+                            <div class="error" ng-show="kaseStock.input.$error.required">
+                                Напишите номер (цифры)
+                            </div>
+                            <div class="error" ng-show="kaseStock.input.$error.pattern">
+                                Неправильный номер
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Код ценной бумаги</td>
+                        <td>
+                            <fieldset >
+                                <input type="text" name="code" ng-model="vm.equityCode" ng-pattern="issueCode" required>
+                            </fieldset>
+                            <div class="error" ng-show="kaseStock.code.$error.required">
+                                Напишите код ценной бумаги (лат.)
+                            </div>
+                            <div class="error" ng-show="kaseStock.code.$error.pattern">
+                                Неправильный код
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>НИН</td>
+                        <td>
+                            <fieldset >
+                                <input type="text" name="nin" ng-model="vm.equityNin" ng-pattern="issueCode" required>
+                            </fieldset>
+                            <div class="error" ng-show="kaseStock.nin.$error.required">
+                                Напишите НИН (лат.)
+                            </div>
+                            <div class="error" ng-show="kaseStock.nin.$error.pattern">
+                                Неправильный НИН
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ISIN</td>
+                        <td>
+                            <fieldset>
+                                <input type="text" name="isin" ng-model="vm.equityIsin" ng-pattern="issueCode" required>
+                            </fieldset>
+                            <div class="error" ng-show="kaseStock.isin.$error.required">
+                                Напишите НИН (лат.)
+                            </div>
+                            <div class="error" ng-show="kaseStock.isin.$error.pattern">
+                                Неправильный НИН
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Номер выпуска</td>
+                        <td>
+                            <fieldset>
+                                <select ng-model="vm.equityIssue" ng-options="value.id as value.label for value in vm.equityIssues">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.equityIssue">
+                                    {{vm.response.msgIssue}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="bond">
+                                В пределах облигационной программы
+                            </label>
+                        </td>
+                        <td>
+                            <fieldset>
+                                <input type="checkbox" id="bond" ng-model="vm.bondCheck">
+                            </fieldset>
+                            <div ng-if="!vm.bondCheck">
+                                {{vm.response.msgCheck}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Номер выпуска облигационной формы</td>
+                        <td>
+                            <fieldset>
+                                <select ng-model="vm.bondChange" ng-options="value.id as value.label for value in vm.bondChanges">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.bondChange">
+                                    {{vm.response.msgBond}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Когда зарегистрированы
+                        </td>
+                        <td>
+                            <fieldset>
+                                <md-content layout-padding ng-cloak>
+                                    <div layout-gt-xs="row">
+                                        <div flex-gt-xs>
+                                            <md-content>
+                                                <md-datepicker ng-model="vm.boardDate" ng-change="vm.boardChange()" md-placeholder="Enter date"></md-datepicker>
+                                            </md-content>
+                                        </div>
+                                    </div>
+                                </md-content>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td>Документ</td>
+                        <td>
+                            <fieldset>
+                                <input name="userfile"
+                                       type="file"
+                                       accept="application/pdf, application/vnd.ms-excel"
+                                       file-model="vm.fileEquity"
+                                />
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Предлагаемая дата публикации</td>
+                        <td>
+                            <md-content layout-padding ng-cloak>
+                                <div layout-gt-xs="row">
+                                    <div flex-gt-xs>
+                                        <md-content>
+                                            <md-datepicker ng-model="vm.equityDate" ng-change="vm.dateEquity()" md-placeholder="Enter date"></md-datepicker>
+                                        </md-content>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <button type="submit" class="button button_save">Сохранить</button>
+            </div>
+        </form>
+
+        <form ng-submit="vm.press()" name="kasePress" ng-if="vm.release">
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            Дата пресс-релиза
+                        </td>
+                        <td>
+                            <fieldset>
+                                <md-content layout-padding ng-cloak>
+                                    <div layout-gt-xs="row">
+                                        <div flex-gt-xs>
+                                            <md-content>
+                                                <md-datepicker ng-model="vm.pressDate" ng-change="vm.pressChange()" md-placeholder="Enter date"></md-datepicker>
+                                            </md-content>
+                                        </div>
+                                    </div>
+                                </md-content>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Эмитент сообшает о</td>
+                        <td>
+                            <fieldset>
+                                <input type="text" name="press" ng-model="vm.pressIssuer" ng-pattern="pressIssuer" required>
+                            </fieldset>
+                            <div class="error" ng-show="kasePress.press.$error.required">
+                                Заполните поле
+                            </div>
+                            <div class="error" ng-show="kasePress.press.$error.pattern">
+                                Поле заполнено неверно
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td>Документ</td>
+                        <td>
+                            <fieldset>
+                                <input name="userfile"
+                                       type="file"
+                                       accept="application/pdf, application/vnd.ms-excel"
+                                       file-model="vm.filePress"
+                                />
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Предлагаемая дата публикации</td>
+                        <td>
+                            <md-content layout-padding ng-cloak>
+                                <div layout-gt-xs="row">
+                                    <div flex-gt-xs>
+                                        <md-content>
+                                            <md-datepicker ng-model="vm.releaseDate" ng-change="vm.dateRelease()" md-placeholder="Enter date"></md-datepicker>
+                                        </md-content>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <button type="submit" class="button button_save">Сохранить</button>
+            </div>
+        </form>
+
+        <form ng-submit="vm.info()" name="kaseInfo" ng-if="vm.message">
+            <div>
+                <table>
+                    <tr>
+                        <td>Тип облигаций</td>
+                        <td>
+                            <fieldset>
+                                <select ng-model="vm.typeInfo" ng-options="value.id as value.label for value in vm.typesInfo">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.typeInfo">
+                                    {{vm.reply.msgType}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Категория официального списка</td>
+                        <td>
+                            <fieldset>
+                                <select ng-model="vm.catInfo" ng-options="value.id as value.label for value in vm.catsInfo">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.catInfo">
+                                    {{vm.reply.msgCat}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Дата выплаты</td>
+                        <td>
+                            <fieldset>
+                                <input type="text" name="info" ng-model="vm.infoDate" ng-pattern="infoDate" required>
+                            </fieldset>
+                            <div class="error" ng-show="kaseInfo.info.$error.required">
+                                Заполните поле
+                            </div>
+                            <div class="error" ng-show="kaseInfo.info.$error.pattern">
+                                Поле заполнено неверно
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Порядковый номер выплаты</td>
+                        <td>
+                            <fieldset>
+                                <select ng-model="vm.infoNumber" ng-options="value.id as value.label for value in vm.infoNumbers">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.infoNumber">
+                                    {{vm.reply.msgNumber}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>НИН</td>
+                        <td>
+                            <fieldset >
+                                <input type="text" name="nin" ng-model="vm.infoNin" ng-pattern="issueCode" required>
+                            </fieldset>
+                            <div class="error" ng-show="kaseInfo.nin.$error.required">
+                                Напишите НИН (лат.)
+                            </div>
+                            <div class="error" ng-show="kaseInfo.nin.$error.pattern">
+                                Неправильный НИН
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ISIN</td>
+                        <td>
+                            <fieldset>
+                                <input type="text" name="isin" ng-model="vm.infoIsin" ng-pattern="issueCode" required>
+                            </fieldset>
+                            <div class="error" ng-show="kaseInfo.isin.$error.required">
+                                Напишите ISIN (лат.)
+                            </div>
+                            <div class="error" ng-show="kaseInfo.isin.$error.pattern">
+                                Неправильный ISIN
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Код ценной бумаги</td>
+                        <td>
+                            <fieldset>
+                                <input type="text" name="code" ng-model="vm.infoCode" ng-pattern="issueCode" required>
+                            </fieldset>
+                            <div class="error" ng-show="kaseInfo.code.$error.required">
+                                Напишите код (лат.)
+                            </div>
+                            <div class="error" ng-show="kaseInfo.code.$error.pattern">
+                                Неправильный код
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Суммы выплаты</td>
+                        <td>
+                            <fieldset>
+                                <input type="text" name="sum" ng-model="vm.infoSum" ng-pattern="issueCode" required>
+                            </fieldset>
+                            <div class="error" ng-show="kaseInfo.sum.$error.required">
+                                Напишите сумму
+                            </div>
+                            <div class="error" ng-show="kaseInfo.sum.$error.pattern">
+                                Введите сумму цифрами
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Валюта выплаты</td>
+                        <td>
+                            <fieldset>
+                                <select ng-model="vm.infoCurrency" ng-options="value.id as value.label for value in vm.infoCurrencies">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.infoCurrency">
+                                    {{vm.reply.msgCurrency}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td>Предлагаемая дата публикации:</td>
+                        <td>
+                            <md-content layout-padding ng-cloak>
+                                <div layout-gt-xs="row">
+                                    <div flex-gt-xs>
+                                        <md-content>
+                                            <md-datepicker ng-model="vm.releaseInfo" ng-change="vm.infoRelease()" md-placeholder="Enter date"></md-datepicker>
+                                        </md-content>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <button type="submit" class="button button_save">Сохранить</button>
+            </div>
+        </form>
+    </div>
 </div>
