@@ -8,7 +8,7 @@ app.controller('MainCtrl', function($http, $scope, $state) {
     $scope.passwordFormat = /^\d+$/;
 
     vm.send = function () {
-        console.log($scope.email, $scope.password);
+        // console.log($scope.email, $scope.password);
         var login = {
             email: $scope.email,
             password: $scope.password

@@ -44,18 +44,6 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
         vm.message = true;
     }
 
-    //test refactor
-
-    let key = '';
-
-    for (var prop in $scope.item) {
-        if ($scope.item.hasOwnProperty(prop)) {
-            console.log(prop + ': ' + $scope.item[prop]);
-        }
-    }
-
-    // refactor
-
     console.log($scope.item.role);
     vm.year = null;
     vm.years = [];
@@ -66,18 +54,6 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
 
     //Select Date
     vm.myDate = new Date();
-
-    vm.minDate = new Date(
-        vm.myDate.getFullYear(),
-        vm.myDate.getMonth() - 2,
-        vm.myDate.getDate()
-    );
-
-    vm.maxDate = new Date(
-        vm.myDate.getFullYear(),
-        vm.myDate.getMonth() + 2,
-        vm.myDate.getDate()
-    );
 
     vm.dataChanged = function () {
         $log.log('Update Date: ', vm.myDate);
