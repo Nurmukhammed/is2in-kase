@@ -29,3 +29,19 @@ app.controller('ItemCtrl', function($scope) {
 ```
 
 >Should be added when sending data with data format
+
+##Here is for the date update
+
+```
+    vm.minDate = new Date(
+        vm.myDate.getFullYear(),
+        vm.myDate.getMonth() - 2,
+        vm.myDate.getDate()
+    );
+
+    vm.maxDate = new Date(
+        vm.myDate.getFullYear(),
+        vm.myDate.getMonth() + 2,
+        vm.myDate.getDate()
+    );
+```
