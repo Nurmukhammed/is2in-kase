@@ -1,33 +1,157 @@
-<header>
-    <div class="topbar">
-        <div class="topbar__left">
-            <a ng-href="home">
-                <img src="../images/uploads/logo-holy.svg" alt="logo">
-            </a>
-        </div>
-        <div class="topbar__right">
-            <div>
-                Система электронного документооборота с эмитентами ценных бумаг
+<header class="header">
+    <div class="container">
+        <div class="topbar">
+            <div class="topbar__left">
+                <a ng-href="home">
+                    <img src="../images/uploads/logo-holy.svg" alt="logo">
+                </a>
+            </div>
+            <div class="topbar__right">
+                <div>
+                    Система электронного документооборота с эмитентами ценных бумаг
+                </div>
             </div>
         </div>
-    </div>
-    <div class="header">
-        <div>
-            <ul class="nav">
-                <li>О проекте</li>
-                <li>Помощь</li>
-                <li>Поддержка</li>
-                <li>Активность</li>
-                <li>Эмитенты</li>
-                <li>Администрирование</li>
-            </ul>
+        <div class="header">
+            <div>
+                <ul class="nav">
+                    <li>О проекте</li>
+                    <li>Сроки размещения</li>
+                    <li>Нормативные документы</li>
+                    <li>Инсайдеры биржи</li>
+                </ul>
+            </div>
         </div>
     </div>
 </header>
 
-<div ng-repeat="report in vm.report track by $index">
-    <div>
-        <a ng-bind="report.title" ng-href="/home/{{report}}" class="report__title report_text"></a>
+<section class="main">
+    <div class="container">
+        <div class="main__form">
+            <div class="title title_company">
+                <h1>АО "Казахстанская фондовая биржа"</h1>
+            </div>
+            <md-content>
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Плановые">
+                        <md-content>
+                            <div class="planned">
+                                <div>
+                                    <h2>Ожидается к рамещению</h2>
+                                </div>
+                                <div>
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <th class="table__1st">Название документа</th>
+                                            <th class="table__2nd">Срок предоставления</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="red">
+                                                Протокол внеочередного общего собрания акционеров от 11 сентября 2018 года
+                                            </td>
+                                            <td>02.10.2018</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="внеплановые">
+                        <md-content>
+                            <div class="unplanned">
+                                <div>
+                                    <h2>Ожидается к рамещению</h2>
+                                </div>
+                                <div>
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <th class="table__1st">Название документа</th>
+                                            <th class="table__2nd">Срок предоставления</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="red">
+                                                Пресс-релиз
+                                            </td>
+                                            <td>10.08.2018</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="red">
+                                                Информация об аресте имущества организации
+                                            </td>
+                                            <td>
+                                                22.08.2018
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+
+                </md-tabs>
+            </md-content>
+            <div class="bound">
+                <div>
+                    <h2>Документы по категориям</h2>
+                </div>
+                <div>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th class="table__1st">
+                                Категория
+                            </th>
+                            <th class="table__2nd">
+                                Всего
+                            </th>
+                        </tr>
+                        <tr ng-repeat="report in vm.report track by $index">
+                            <td>
+                                <a ng-bind="report.title" ng-href="/home/{{report}}" class="report__title report_text"></a>
+                            </td>
+                            <td>{{$index+1}}</td>
+                        </tr>
+                        <tr>
+                            <th>Все документы</th>
+                            <th>21</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="bound main__users">
+                <div>
+                    <h2>Пользователи компании</h2>
+                </div>
+                <div>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th class="table__1st">
+                                Имя
+                            </th>
+                            <th class="table__2nd">
+                                E-mail
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                Кобаева Айгерим
+                            </td>
+                            <td>k.myasnikova@life.stdi.kz</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
+</section>
+
+
 

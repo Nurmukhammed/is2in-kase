@@ -176,5 +176,4 @@ app.controller('HomeCtrl', function($http, $scope, $state) {
         }
     ];
 
-
 });

@@ -6,20 +6,25 @@ app.controller('ReportCtrl', function($http, $state, $scope) {
     $scope.groups = $scope.report.groups;
     console.log($scope.groups);
     console.log($scope.report);
-
     // Используй group id чтобы сделать переход
+    //filter for the year
+    vm.years = [
+        {
+            year: 2018
+        },
+        {
+            year: 2017
+        },
+        {
+            year: 2016
+        },
+        {
+            year: 2015
+        }
+    ];
 
-    // for (var i = 0; i <= $scope.report.groups.length; i++) {
-    //     vm.iterrator = $scope.report.groups[i];
-    // }
+    vm.changeDate = function() {
 
-    // vm.click = function(index) {
-    //     vm.index = index;
-    //     console.log(index);
-    //     if (vm.index === $scope.report.groups[0].id) {
-    //         console.log('id');
-    //         $state.go('item');
-    //     }
-    // }
+    }
 
 });
