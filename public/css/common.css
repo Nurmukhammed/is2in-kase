@@ -147,3 +147,6 @@ h2 {
 .table__2nd {
     width: calc(100% - 85%);
 }
+.angular-ui-tree-handle {
+    text-transform: capitalize;
+}

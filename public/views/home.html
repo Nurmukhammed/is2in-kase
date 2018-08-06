@@ -48,7 +48,8 @@
                                         </tr>
                                         <tr>
                                             <td class="red">
-                                                Протокол внеочередного общего собрания акционеров от 11 сентября 2018 года
+                                                Протокол внеочередного общего собрания акционеров от 11 сентября 2018
+                                                года
                                             </td>
                                             <td>02.10.2018</td>
                                         </tr>
@@ -111,7 +112,8 @@
                         </tr>
                         <tr ng-repeat="report in vm.report track by $index">
                             <td>
-                                <a ng-bind="report.title" ng-href="/home/{{report}}" class="report__title report_text"></a>
+                                <a ng-bind="report.title" ng-href="/home/{{report}}"
+                                   class="report__title report_text"></a>
                             </td>
                             <td>{{$index+1}}</td>
                         </tr>
@@ -149,9 +151,55 @@
                 </div>
             </div>
         </div>
-
     </div>
 </section>
+
+<div class="container">
+    <div class="demo">
+        <!-- Nested node template -->
+        <script type="text/ng-template" id="nodes_renderer.html">
+            <div ui-tree-handle class="tree-node tree-node-content">
+                <a class="btn btn-success btn-xs" ng-if="node.groups && node.groups.length > 0" data-nodrag ng-click="toggle(this)">
+                <span
+                    class="glyphicon"
+                    ng-class="{
+                        'glyphicon-chevron-right': collapsed,
+                        'glyphicon-chevron-down': !collapsed
+                    }"
+                    >
+                </span>
+                </a>
+                    {{node.title}}
+
+            </div>
+            <ol ui-tree-nodes="" ng-model="node.groups" ng-class="{hidden: collapsed}">
+                <li ng-repeat="node in node.groups" ui-tree-node ng-include="'nodes_renderer.html'">
+                    {{node.title}}
+                </li>
+            </ol>
+        </script>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div>
+                    <h3>Документы по категориям (пример)</h3>
+                </div>
+                <button ng-click="expandAll()">Смотреть все</button>
+                <button ng-click="collapseAll()">Скрыть все</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div ui-tree id="tree-root">
+                    <ol ui-tree-nodes ng-model="vm.report">
+                        <li ng-repeat="node in vm.report" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

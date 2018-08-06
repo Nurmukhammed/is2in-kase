@@ -1,7 +1,8 @@
 var app = angular.module('State', [
     'ui.router',
     'ngMaterial',
-    'ngMessages'
+    'ngMessages',
+    'ui.tree'
 ]);
 
 app.config(routeConfig);
@@ -32,6 +33,12 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
         })
         .state('report', {
             url: '/home/:report',
+            templateUrl: "views/report.html",
+            controller : "ReportCtrl",
+            controllerAs : 'vm'
+        })
+        .state('node', {
+            url: '/home/:node',
             templateUrl: "views/report.html",
             controller : "ReportCtrl",
             controllerAs : 'vm'

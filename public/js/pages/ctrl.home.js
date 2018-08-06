@@ -1,5 +1,10 @@
 var app = angular.module('Home', []);
 
+app.config(function(treeConfig) {
+    treeConfig.defaultCollapsed = true; // collapse nodes by default
+    treeConfig.appendChildOnHover = true; // append dragged nodes as children by default
+});
+
 app.controller('HomeCtrl', function($http, $scope, $state) {
     var vm = this;
     vm.report = [
@@ -9,27 +14,27 @@ app.controller('HomeCtrl', function($http, $scope, $state) {
             groups : [
                 {
                     id: 1,
-                    text: 'Финансовая отчетность',
+                    title: 'Финансовая отчетность',
                     template: 1
                 },
                 {
                     id: 2,
-                    text: 'Пояснительная записка',
+                    title: 'Пояснительная записка',
                     template: 1
                 },
                 {
                     id: 3,
-                    text: 'Аудиторский отчет',
+                    title: 'Аудиторский отчет',
                     template: 1
                 },
                 {
                     id: 4,
-                    text: 'Отчет по обзору финансовой отчетности',
+                    title: 'Отчет по обзору финансовой отчетности',
                     template: 1
                 },
                 {
                     id: 5,
-                    text: 'Отчет об остатках на балансовых и внебалансовых счетах',
+                    title: 'Отчет об остатках на балансовых и внебалансовых счетах',
                     template: 1
                 }
             ]
@@ -40,32 +45,32 @@ app.controller('HomeCtrl', function($http, $scope, $state) {
             groups: [
                 {
                     id: 1,
-                    text: 'Проспект выпуска акций в новой редакции',
+                    title: 'Проспект выпуска акций в новой редакции',
                     template: 1
                 },
                 {
                     id: 2,
-                    text: 'Проспект выпуска облигаций в новой редакции',
+                    title: 'Проспект выпуска облигаций в новой редакции',
                     template: 1
                 },
                 {
                     id: 3,
-                    text: 'Проспект выпуска облигационной программы в новой редакции',
+                    title: 'Проспект выпуска облигационной программы в новой редакции',
                     template: 1
                 },
                 {
                     id: 4,
-                    text: 'Изменения и дополнения в проспект выпуска акций',
+                    title: 'Изменения и дополнения в проспект выпуска акций',
                     template: 4
                 },
                 {
                     id: 5,
-                    text: 'Изменения и дополнения в проспект выпуска облигаций',
+                    title: 'Изменения и дополнения в проспект выпуска облигаций',
                     template: 4
                 },
                 {
                     id: 5,
-                    text: 'Изменения и дополнения в проспект выпуска облигационной программы',
+                    title: 'Изменения и дополнения в проспект выпуска облигационной программы',
                     template: 4
                 }
             ]
@@ -76,22 +81,22 @@ app.controller('HomeCtrl', function($http, $scope, $state) {
             groups: [
                 {
                     id: 1,
-                    text: 'Устав компании в новой редакции',
+                    title: 'Устав компании в новой редакции',
                     template: 1
                 },
                 {
                     id: 2,
-                    text: 'Изменения и дополнения в устав компании',
+                    title: 'Изменения и дополнения в устав компании',
                     template: 2
                 },
                 {
                     id: 3,
-                    text: 'Кодекс корпоративного управления в новой редакции',
+                    title: 'Кодекс корпоративного управления в новой редакции',
                     template: 1
                 },
                 {
                     id: 4,
-                    text: 'Изменения и дополнения в кодекс корпоративного управления.',
+                    title: 'Изменения и дополнения в кодекс корпоративного управления.',
                     template: 2
                 }
             ]
@@ -102,17 +107,17 @@ app.controller('HomeCtrl', function($http, $scope, $state) {
             groups: [
                 {
                     id: 1,
-                    text: 'Решение',
+                    title: 'Решение',
                     template: 1
                 },
                 {
                     id: 2,
-                    text: 'Протокол общего собрания',
+                    title: 'Протокол общего собрания',
                     template: 3
                 },
                 {
                     id: 3,
-                    text: 'Протокол заседания Совета директоров',
+                    title: 'Протокол заседания Совета директоров',
                     template: 3
                 }
             ]
@@ -123,12 +128,12 @@ app.controller('HomeCtrl', function($http, $scope, $state) {
             groups: [
                 {
                     id: 1,
-                    text: 'Пресс-релиз',
+                    title: 'Пресс-релиз',
                     template: 5
                 },
                 {
                     id: 2,
-                    text: 'Календарь корпоративных событий',
+                    title: 'Календарь корпоративных событий',
                     template: 5
                 }
             ]
@@ -139,41 +144,71 @@ app.controller('HomeCtrl', function($http, $scope, $state) {
             groups: [
                 {
                     id: 1,
-                    text: 'Изменение ставки вознаграждения',
+                    title: 'Изменение ставки вознаграждения',
                     template: 6
                 },
                 {
                     id: 2,
-                    text: 'Выплата купонного вознаграждения',
+                    title: 'Выплата купонного вознаграждения',
                     template: 6
                 },
                 {
                     id: 3,
-                    text: 'Выплата основного долга',
+                    title: 'Выплата основного долга',
                     template: 6
                 },
                 {
                     id: 4,
-                    text: 'Невыплата купонного вознаграждения',
+                    title: 'Невыплата купонного вознаграждения',
                     template: 6
                 },
                 {
                     id: 5,
-                    text: 'Проведение общего собрания',
+                    title: 'Проведение общего собрания',
                     template: 6
                 },
                 {
                     id: 6,
-                    text: 'Совершение крупной сделки',
+                    title: 'Совершение крупной сделки',
                     template: 6
                 },
                 {
                     id: 7,
-                    text: 'Смена регистратора',
+                    title: 'Смена регистратора',
                     template: 6
                 },
             ]
         }
     ];
+
+    $scope.remove = function(scope) {
+        scope.remove();
+    };
+
+    $scope.toggle = function(scope) {
+        scope.toggle();
+    };
+
+    $scope.moveLastToTheBeginning = function() {
+        var a = $scope.data.pop();
+        $scope.data.splice(0, 0, a);
+    };
+
+    $scope.addSubItem = function(scope) {
+        var nodeData = scope.$modelValue;
+        nodeData.nodes.push({
+            id: nodeData.id * 10 + nodeData.nodes.length,
+            title: nodeData.title + '.' + (nodeData.nodes.length + 1),
+            groups: []
+        });
+    };
+
+    $scope.collapseAll = function() {
+        $scope.$broadcast('angular-ui-tree:collapse-all');
+    };
+
+    $scope.expandAll = function() {
+        $scope.$broadcast('angular-ui-tree:expand-all');
+    };
 
 });
