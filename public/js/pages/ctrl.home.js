@@ -5,7 +5,7 @@ app.config(function(treeConfig) {
     treeConfig.appendChildOnHover = true; // append dragged nodes as children by default
 });
 
-app.controller('HomeCtrl', function($http, $scope, $state) {
+app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
     var vm = this;
     vm.report = [
         {
@@ -181,6 +181,16 @@ app.controller('HomeCtrl', function($http, $scope, $state) {
         }
     ];
 
+    vm.docs = [{
+        id: 1,
+        title: 'Пресс-релиз',
+        publishDate: '10.08.2018'
+    }, {
+        id: 2,
+        title: 'Информация об аресте имущества организации',
+        publishDate: '22.08.2018'
+    }];
+
     $scope.remove = function(scope) {
         scope.remove();
     };
@@ -196,9 +206,9 @@ app.controller('HomeCtrl', function($http, $scope, $state) {
 
     $scope.addSubItem = function(scope) {
         var nodeData = scope.$modelValue;
-        nodeData.nodes.push({
-            id: nodeData.id * 10 + nodeData.nodes.length,
-            title: nodeData.title + '.' + (nodeData.nodes.length + 1),
+        nodeData.groups.push({
+            id: nodeData.id * 10 + nodeData.groups.length,
+            title: nodeData.title + '.' + (nodeData.groups.length + 1),
             groups: []
         });
     };
@@ -208,7 +218,26 @@ app.controller('HomeCtrl', function($http, $scope, $state) {
     };
 
     $scope.expandAll = function() {
+        console.log('Some way');
         $scope.$broadcast('angular-ui-tree:expand-all');
     };
+
+    $scope.startScanner = function() {
+        $rootScope.$broadcast('scanner-started');
+    };
+    $scope.$on('scanner-started', function(event, args) {
+        console.log('scanner received');
+    });
+
+    $scope.$parentNodeScope = function() {
+        if (isChild()) {
+            console.log('I have a child');
+        }
+    };
+
+    $scope.$childNodesScope = function() {
+        console.log("I'm a child");
+    }
+
 
 });

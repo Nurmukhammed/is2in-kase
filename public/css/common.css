@@ -150,3 +150,13 @@ h2 {
 .angular-ui-tree-handle {
     text-transform: capitalize;
 }
+.common {
+    padding: 8px;
+}
+.default {
+    margin: 0 0 20px;
+}
+.year {
+    display: flex;
+    flex-flow: row wrap;
+}
