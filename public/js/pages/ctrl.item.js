@@ -32,7 +32,10 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     $scope.issueCode = new RegExp("^[a-zA-Z0-9\\s]+$");
     if ($scope.item.template === 1) {
         vm.item = true;
-    } else if ($scope.item.template === 2) {
+    } else if ($scope.item.template === 1.1) {
+        vm.itemSelect = true;
+    }
+    else if ($scope.item.template === 2) {
         vm.report = true;
     } else if ($scope.item.template === 3) {
         vm.meeting = true;
@@ -42,7 +45,11 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
         vm.release = true;
     } else if ($scope.item.template === 6) {
         vm.message = true;
+    } else if ($scope.item.template === 7) {
+
     }
+
+    vm.johny = false;
 
     console.log($scope.item.role);
     vm.year = null;
@@ -90,6 +97,22 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
         // }).error(function(error){
         //     console.log(error);
         // })
+    };
+    vm.itemOne = function() {
+        vm.sendOne = {
+            month: vm.month,
+            year: vm.year
+        };
+        if(!vm.month || !vm.year || vm.consCheck === false || vm.quarterCheck === false) {
+            vm.response = {
+                msgCheck: 'Выберите галочку',
+                msgMonth: 'Выберите месяц',
+                msgYear: 'Выберите год',
+            }
+        }
+        if(vm.consCheck === true && vm.quarterCheck === true) {
+            $state.go('home');
+        }
     };
     //For edit pages
     vm.changeShow = false;

@@ -32,7 +32,7 @@
         <h3 ng-bind="item.title"></h3>
     </div>
     <div class="form-wrap">
-        <form ng-submit="vm.form()" ng-if="vm.item">
+        <form ng-submit="vm.form()" ng-if="vm.item" class="template template_item">
             <div>
                 <table>
                     <tr>
@@ -66,7 +66,7 @@
                     <tr>
                         <td>
                             <label for="quarter">
-                                За какой квартал
+                                За какой период
                             </label>
                         </td>
                         <td>
@@ -136,12 +136,126 @@
                     </tr>
                 </table>
             </div>
-            <div>
+            <div class="button-wrap">
                 <button type="submit" class="button button_save">Сохранить</button>
             </div>
         </form>
 
-        <form ng-submit="vm.record()" name="kaseRecord" ng-if="vm.report">
+        <form ng-submit="vm.itemOne()" name="kaseForm" ng-if="vm.itemSelect" class="template template_itemOne">
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <label for="consolidate">Консолидированная</label>
+                        </td>
+                        <td>
+                            <fieldset>
+                                <input type="checkbox" id="consolidate" ng-model="vm.consCheck">
+                            </fieldset>
+                            <div ng-if="!vm.consCheck">
+                                {{vm.response.msgCheck}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="quarter">
+                                Квартальная
+                            </label>
+                        </td>
+                        <td>
+                            <fieldset>
+                                <input type="checkbox" id="quarter" ng-model="vm.quarterCheck">
+                            </fieldset>
+                            <div ng-if="!vm.quarterCheck">
+                                {{vm.response.msgCheck}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="quarter">
+                                За какой период
+                            </label>
+                        </td>
+                        <td>
+                            <fieldset>
+                                <select ng-model="vm.month">
+                                    <option value="" disabled selected>Выберите</option>
+                                    <option value="январь-март">январь-март</option>
+                                    <option value="январь-июнь">январь-июнь</option>
+                                    <option value="январь-сентябрь">январь-сентябрь</option>
+                                    <option value="январь-декабрь">январь-декабрь</option>
+                                </select>
+                                <div ng-if="!vm.month">
+                                    {{vm.response.msgMonth}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Год
+                        </td>
+                        <td>
+                            <div>
+                                <fieldset>
+                                    <select
+                                            ng-model="vm.year"
+                                            ng-options="year for year in vm.years"
+                                            class="years">
+                                    </select>
+                                    <div ng-if="!vm.year">
+                                        {{vm.response.msgYear}}
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Документ в формате PDF:
+                        </td>
+                        <td>
+                            <div>
+                                <fieldset>
+                                    <input name="pdf"
+                                           type="file"
+                                           accept="application/pdf"
+                                           file-model="vm.pdfItem"/>
+                                </fieldset>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Документ в формате Excel:
+                        </td>
+                        <td>
+                            <fieldset>
+                                <input name="excel"
+                                       type="file"
+                                       accept="application/vnd.ms-excel"
+                                       file-model="vm.excelItem"/>
+                            </fieldset>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Комментарий:</td>
+                        <td>
+                            <fieldset>
+                                <textarea class="textarea"></textarea>
+                            </fieldset>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="button-wrap">
+                <button type="submit" class="button button_save">Сохранить</button>
+            </div>
+        </form>
+
+        <form ng-submit="vm.record()" name="kaseRecord" ng-if="vm.report" class="template template_record">
             <div>
                 <table>
                     <tr>
@@ -211,14 +325,14 @@
                     </tr>
                 </table>
             </div>
-            <div>
+            <div class="button-wrap">
                 <fieldset>
                     <button type="submit" class="button button_save">Сохранить</button>
                 </fieldset>
             </div>
         </form>
 
-        <form ng-submit="vm.board()" ng-if="vm.meeting">
+        <form ng-submit="vm.board()" ng-if="vm.meeting" class="template template_board">
             <div>
                 <table>
                     <tr>
@@ -321,12 +435,12 @@
                     </tr>
                 </table>
             </div>
-            <div>
+            <div class="button-wrap">
                 <button class="button button_save">Сохранить</button>
             </div>
         </form>
 
-        <form ng-submit="vm.stock()" name="kaseStock" ng-if="vm.equity">
+        <form ng-submit="vm.stock()" name="kaseStock" ng-if="vm.equity" class="template template_equity">
             <div>
                 <table>
                     <tr>
@@ -489,12 +603,12 @@
                     </tr>
                 </table>
             </div>
-            <div>
+            <div class="button-wrap">
                 <button type="submit" class="button button_save">Сохранить</button>
             </div>
         </form>
 
-        <form ng-submit="vm.press()" name="kasePress" ng-if="vm.release">
+        <form ng-submit="vm.press()" name="kasePress" ng-if="vm.release" class="template template_press">
             <div>
                 <table>
                     <tr>
@@ -561,12 +675,12 @@
                     </tr>
                 </table>
             </div>
-            <div>
+            <div class="button-wrap">
                 <button type="submit" class="button button_save">Сохранить</button>
             </div>
         </form>
 
-        <form ng-submit="vm.info()" name="kaseInfo" ng-if="vm.message">
+        <form ng-submit="vm.info()" name="kaseInfo" ng-if="vm.message" class="template template_info">
             <div>
                 <table>
                     <tr>
@@ -711,9 +825,12 @@
                     </tr>
                 </table>
             </div>
-            <div>
+            <div class="button-wrap">
                 <button type="submit" class="button button_save">Сохранить</button>
             </div>
         </form>
+    </div>
+    <div>
+        Электронная версия финансовой отчетности должна являться сканированной копией ее бумажной версии и предоставляется бирже в формате Adobe Acrobat Professional® и формате Excel. Финансовая отчетность должна быть подготовлена нарастающим итогом, подписана первым руководителем и главным бухгалтером (или замещающими их лицами) листинговой компании и заверена оттиском печати данной компании (организации). Документ должен быть направлен бирже в положении удобном для чтения и иметь хорошее качество для последующего его просмотра.
     </div>
 </div>

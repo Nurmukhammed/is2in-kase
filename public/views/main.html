@@ -1,5 +1,5 @@
-<section ng-controller="MainCtrl as vm">
-    <div class="container">
+<div ng-controller="MainCtrl as vm">
+    <div class="container login-wrap">
         <div>
             <h2 class="title">Система электронного документооборота is2in</h2>
         </div>
@@ -35,8 +35,8 @@
             </div>
 
             <div class="agreement wrap">
-                    <input type="checkbox" name="agreement" id="acceptAgreement" ng-click="checked()" ng-model="firstChecked">
-                <label for="acceptAgreement">я принимаю пользовательское </label>
+                <input class="input_checkbox {" type="checkbox" name="agreement" id="acceptAgreement" ng-click="checked()" ng-model="firstChecked">
+                <label for="acceptAgreement" class="acceptUser">я принимаю пользовательское </label>
             </div>
             <div>
                 <button type="submit" class="button">Войти</button>
@@ -48,4 +48,4 @@
             <!--<pre>kaseForm.$error.pattern = {{!!kaseForm.$error.pattern}}</pre><br/>-->
         </form>
     </div>
-</section>
+</div>
