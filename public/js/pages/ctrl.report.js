@@ -23,8 +23,4 @@ app.controller('ReportCtrl', function($http, $state, $scope) {
         }
     ];
 
-    vm.changeDate = function() {
-
-    }
-
 });
