@@ -25,9 +25,10 @@ app.config(function ($mdDateLocaleProvider) {
 app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     var vm = this;
     $scope.item = JSON.parse($state.params.item);
-    console.log($scope.item);
-    $scope.text = $scope.item.text;
+    $scope.text = $scope.item.title;
     $scope.role = $scope.item.template;
+    console.log($scope.role);
+    $scope.trim = $scope.item.trim;
     $scope.issueNumber = /[0-9]/g;
     $scope.issueCode = new RegExp("^[a-zA-Z0-9\\s]+$");
     if ($scope.item.template === 1) {
@@ -308,4 +309,28 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
             $state.go('home');
         }
     };
+
+    vm.months = [{
+            id: 1,
+            label: 'январь-март',
+            position: 1
+        },
+        {
+            id: 2,
+            label: 'январь-июнь',
+            position: 2
+        },
+        {
+            id: 3,
+            label: 'январь-сентябрь',
+            position: 3
+        },
+        {
+            id: 4,
+            label: 'январь-декабрь',
+            position: 4
+        }];
+
+    console.log(vm.month);
+
 });

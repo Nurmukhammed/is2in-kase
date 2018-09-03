@@ -160,32 +160,21 @@
                     <tr>
                         <td>
                             <label for="quarter">
-                                Квартальная
-                            </label>
-                        </td>
-                        <td>
-                            <fieldset>
-                                <input type="checkbox" id="quarter" ng-model="vm.quarterCheck">
-                            </fieldset>
-                            <div ng-if="!vm.quarterCheck">
-                                {{vm.response.msgCheck}}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="quarter">
                                 За какой период
                             </label>
                         </td>
                         <td>
-                            <fieldset>
-                                <select ng-model="vm.month">
-                                    <option value="" disabled selected>Выберите</option>
-                                    <option value="январь-март">январь-март</option>
-                                    <option value="январь-июнь">январь-июнь</option>
-                                    <option value="январь-сентябрь">январь-сентябрь</option>
-                                    <option value="январь-декабрь">январь-декабрь</option>
+                            <fieldset ng-if="trim === 1">
+                                <select ng-model="vm.month" ng-options="value.id as value.label for value in vm.months | orderBy: '+position'">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.month">
+                                    {{vm.response.msgMonth}}
+                                </div>
+                            </fieldset>
+                            <fieldset ng-if="trim === 1.1">
+                                <select ng-model="vm.month" ng-options="value.id as value.label for value in vm.months | orderBy: '-position'">
+                                    <option>--</option>
                                 </select>
                                 <div ng-if="!vm.month">
                                     {{vm.response.msgMonth}}
