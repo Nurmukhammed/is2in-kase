@@ -27,7 +27,8 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                 {
                     id: 3,
                     title: 'Неполная периодическая финансовая отчетность для организаций членов Биржи',
-                    template: 1
+                    template: 1.1,
+                    trim: 1.2
                 },
                 {
                     id: 4,

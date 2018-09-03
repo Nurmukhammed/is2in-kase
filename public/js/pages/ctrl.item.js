@@ -331,6 +331,55 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
             position: 4
         }];
 
-    console.log(vm.month);
+    vm.allMonths = [{
+        id: 1,
+        label: 'январь'
+    },
+    {
+        id: 2,
+        label: 'январь-февраль'
+    },
+    {
+        id: 3,
+        label: 'январь-март'
+    },
+    {
+        id: 4,
+        label: 'январь-апрель'
+    },
+    {
+        id: 5,
+        label: 'январь-май'
+    },
+    {
+        id: 6,
+        label: 'январь-июнь'
+    },
+    {
+        id: 7,
+        label: 'январь-июль'
+    },
+    {
+        id: 8,
+        label: 'январь-август'
+    },
+    {
+        id: 9,
+        label: 'январь-сентябрь'
+    },
+    {
+        id: 10,
+        label: 'январь-октябрь'
+
+    },
+    {
+        id: 10,
+        label: 'январь-ноябрь'
+
+    },
+    {
+        id: 10,
+        label: 'январь-декабрь'
+    }];
 
 });

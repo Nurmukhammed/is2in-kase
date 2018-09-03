@@ -180,6 +180,14 @@
                                     {{vm.response.msgMonth}}
                                 </div>
                             </fieldset>
+                            <fieldset ng-if="trim === 1.2">
+                                <select ng-model="vm.allMonth" ng-options="value.id as value.label for value in vm.allMonths | orderBy: '-position'">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.month">
+                                    {{vm.response.msgMonth}}
+                                </div>
+                            </fieldset>
                         </td>
                     </tr>
                     <tr>
