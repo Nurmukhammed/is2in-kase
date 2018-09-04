@@ -141,16 +141,17 @@
                 <table>
                     <tr>
                         <td>
-                            <label for="consolidate">Консолидированная</label>
+                            <label>Консолидированная</label>
                         </td>
                         <td>
                             <fieldset>
-                                <input type="checkbox" id="consolidate" ng-model="vm.consCheck">
+                                <md-checkbox ng-model="data.consCheck" class="checkbox_new"></md-checkbox>
                             </fieldset>
-                            <div ng-if="!vm.consCheck">
+                            <div ng-if="!data.consCheck">
                                 {{vm.response.msgCheck}}
                             </div>
                         </td>
+
                     </tr>
                     <tr>
                         <td>
@@ -161,7 +162,7 @@
                         <td>
                             <fieldset ng-if="trim === 1">
                                 <md-input-container>
-                                    <label>Выберите год</label>
+                                    <label>Выберите период</label>
                                     <md-select ng-model="vm.month">
                                         <md-option
                                                 ng-value="month"
@@ -185,9 +186,6 @@
                                         </md-option>
                                     </md-select>
                                 </md-input-container>
-                                <!--<select ng-model="vm.month" ng-options="value.id as value.label for value in vm.months | orderBy: '-position'">-->
-                                    <!--<option>&#45;&#45;</option>-->
-                                <!--</select>-->
                                 <div ng-if="!vm.month">
                                     {{vm.response.msgMonth}}
                                 </div>

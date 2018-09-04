@@ -116,17 +116,17 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     vm.itemOne = function () {
         vm.sendOne = {
             month: vm.month,
-            year: dates.currentYear
+            year: vm.year
         };
         console.log(vm.sendOne);
-        if (!vm.month || !vm.year || vm.consCheck === false || vm.quarterCheck === false) {
+        if (!vm.month || !vm.year || $scope.data.consCheck === false || vm.quarterCheck === false) {
             vm.response = {
                 msgCheck: 'Выберите галочку',
                 msgMonth: 'Выберите месяц',
                 msgYear: 'Выберите год',
             }
         }
-        if (vm.consCheck === true && vm.quarterCheck === true) {
+        if ($scope.data.consCheck === true && vm.quarterCheck === true) {
             $state.go('home');
         }
     };
