@@ -8,6 +8,8 @@ app.controller('ReportCtrl', function($http, $state, $scope) {
     console.log($scope.report);
     // Используй group id чтобы сделать переход
     //filter for the year
+
+
     vm.years = [
         {
             year: 2018

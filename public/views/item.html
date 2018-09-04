@@ -41,14 +41,14 @@
                         </td>
                         <td>
                             <fieldset>
-                                <input type="checkbox" id="consolidate" ng-model="vm.consCheck">
+                                <md-checkbox ng-model="data.consCheck" class="checkbox_new"></md-checkbox>
                             </fieldset>
-                            <div ng-if="!vm.consCheck">
+                            <div ng-if="!data.consCheck">
                                 {{vm.reply.msgCheck}}
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-if="item.quarter === 1">
                         <td>
                             <label for="quarter">
                                 Квартальная
@@ -70,37 +70,19 @@
                             </label>
                         </td>
                         <td>
-                            <fieldset>
-                                <select ng-model="vm.quarter">
-                                    <option value="" disabled selected>Выберите</option>
-                                    <option value="I Квартал">I Квартал</option>
-                                    <option value="II Квартал">II Квартал</option>
-                                    <option value="III Квартал">III Квартал</option>
-                                    <option value="IV Квартал">IV Квартал</option>
-                                </select>
+                            <fieldset ng-if="item.quarterSelected === 1">
+                                <md-input-container>
+                                    <label>Выберите</label>
+                                    <md-select ng-model="vm.quarter">
+                                        <md-option
+                                                ng-value="item"
+                                                ng-repeat="item in vm.quarters">{{item.label}}</md-option>
+                                    </md-select>
+                                </md-input-container>
                                 <div ng-if="!vm.quarter">
                                     {{vm.reply.msgQuarter}}
                                 </div>
                             </fieldset>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Год
-                        </td>
-                        <td>
-                            <div>
-                                <fieldset>
-                                    <select
-                                            ng-model="vm.year"
-                                            ng-options="year for year in vm.years"
-                                            class="years">
-                                    </select>
-                                    <div ng-if="!vm.year">
-                                        {{vm.reply.msgYear}}
-                                    </div>
-                                </fieldset>
-                            </div>
                         </td>
                     </tr>
                 </table>
@@ -108,19 +90,7 @@
             <div>
                 <table>
                     <tr>
-                        <td>Документ</td>
-                        <td>
-                            <fieldset>
-                                <input name="userfile"
-                                       type="file"
-                                       accept="application/pdf, application/vnd.ms-excel"
-                                       file-model="vm.fileItem"/>
-                            </fieldset>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Предлагаемая дата публикации</td>
+                        <td>Дата завершения периода:</td>
                         <td>
                             <md-content layout-padding ng-cloak>
                                 <div layout-gt-xs="row">
@@ -134,10 +104,35 @@
                             {{vm.myDate | date: shortDate}}
                         </td>
                     </tr>
+                    <tr>
+                        <td>Документ</td>
+                        <td>
+                            <fieldset>
+                                <input name="userfile"
+                                       type="file"
+                                       accept="application/pdf, application/vnd.ms-excel"
+                                       file-model="vm.fileItem"/>
+                            </fieldset>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Комментарий:</td>
+                        <td>
+                            <fieldset>
+                                <md-input-container >
+                                    <textarea class="textarea" rows="4" ng-model="vm.comments" placeholder="Комментарий"></textarea>
+                                </md-input-container>
+                                <div ng-if="!vm.comments">
+                                    {{vm.reply.msgComment}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div class="button-wrap">
-                <button type="submit" class="button button_save">Сохранить</button>
+                <md-button type="submit" class="md-cornered button_new">Сохранить</md-button>
             </div>
         </form>
 
@@ -165,23 +160,48 @@
                         </td>
                         <td>
                             <fieldset ng-if="trim === 1">
-                                <select ng-model="vm.month" ng-options="value.id as value.label for value in vm.months | orderBy: '+position'">
-                                    <option>--</option>
-                                </select>
+                                <md-input-container>
+                                    <label>Выберите год</label>
+                                    <md-select ng-model="vm.month">
+                                        <md-option
+                                                ng-value="month"
+                                                ng-repeat="month in vm.months | orderBy: '+position'">
+                                            {{month.label}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
                                 <div ng-if="!vm.month">
                                     {{vm.response.msgMonth}}
                                 </div>
                             </fieldset>
                             <fieldset ng-if="trim === 1.1">
-                                <select ng-model="vm.month" ng-options="value.id as value.label for value in vm.months | orderBy: '-position'">
-                                    <option>--</option>
-                                </select>
+                                <md-input-container>
+                                    <label>Выберите год</label>
+                                    <md-select ng-model="vm.month">
+                                        <md-option
+                                            ng-value="month"
+                                            ng-repeat="month in vm.months | orderBy: '-position'">
+                                            {{month.label}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <!--<select ng-model="vm.month" ng-options="value.id as value.label for value in vm.months | orderBy: '-position'">-->
+                                    <!--<option>&#45;&#45;</option>-->
+                                <!--</select>-->
                                 <div ng-if="!vm.month">
                                     {{vm.response.msgMonth}}
                                 </div>
                             </fieldset>
                             <fieldset ng-if="trim === 1.2">
                                 <select ng-model="vm.allMonth" ng-options="value.id as value.label for value in vm.allMonths | orderBy: '-position'">
+                                    <option>--</option>
+                                </select>
+                                <div ng-if="!vm.month">
+                                    {{vm.response.msgMonth}}
+                                </div>
+                            </fieldset>
+                            <fieldset ng-if="trim === 1.3">
+                                <select ng-model="vm.threeMonth" ng-options="value.id as value.label for value in vm.threeMonths | orderBy: '-position'">
                                     <option>--</option>
                                 </select>
                                 <div ng-if="!vm.month">
@@ -196,20 +216,30 @@
                         </td>
                         <td>
                             <div>
+                                <!--<fieldset>-->
+                                    <!--<select-->
+                                        <!--ng-init="vm.year = vm.years.slice(-1)[0]"-->
+                                        <!--ng-model="vm.year"-->
+                                        <!--ng-options="year for year in vm.years"-->
+                                        <!--class="years">-->
+                                    <!--</select>-->
+                                    <!--<div ng-if="!vm.year">-->
+                                        <!--{{vm.response.msgYear}}-->
+                                    <!--</div>-->
+                                <!--</fieldset>-->
                                 <fieldset>
-                                    <select
-                                            ng-model="vm.year"
-                                            ng-options="year for year in vm.years"
-                                            class="years">
+                                    <select name="getDate"
+                                            ng-model="dates.currentYear" id="getDate"
+                                            ng-click="getYearToday()"
+                                            ng-options="year.val as year.val disable when year.disabled for year in years"
+                                            required>
+                                        <option value="" disabled >Выберите год</option>
                                     </select>
-                                    <div ng-if="!vm.year">
-                                        {{vm.response.msgYear}}
-                                    </div>
                                 </fieldset>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-if="document === 1">
                         <td>
                             Документ в формате PDF:
                         </td>
@@ -224,7 +254,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-if="document === 1">
                         <td>
                             Документ в формате Excel:
                         </td>
@@ -248,7 +278,7 @@
                 </table>
             </div>
             <div class="button-wrap">
-                <button type="submit" class="button button_save">Сохранить</button>
+                <md-button type="submit" class="md-cornered button_new">Сохранить</md-button>
             </div>
         </form>
 
@@ -324,7 +354,7 @@
             </div>
             <div class="button-wrap">
                 <fieldset>
-                    <button type="submit" class="button button_save">Сохранить</button>
+                    <md-button type="submit" class="md-cornered button_new">Сохранить</md-button>
                 </fieldset>
             </div>
         </form>
@@ -433,7 +463,7 @@
                 </table>
             </div>
             <div class="button-wrap">
-                <button class="button button_save">Сохранить</button>
+                <md-button type="submit" class="md-cornered button_new">Сохранить</md-button>
             </div>
         </form>
 
@@ -601,7 +631,7 @@
                 </table>
             </div>
             <div class="button-wrap">
-                <button type="submit" class="button button_save">Сохранить</button>
+                <md-button type="submit" class="md-cornered button_new">Сохранить</md-button>
             </div>
         </form>
 
@@ -673,7 +703,7 @@
                 </table>
             </div>
             <div class="button-wrap">
-                <button type="submit" class="button button_save">Сохранить</button>
+                <md-button type="submit" class="md-cornered button_new">Сохранить</md-button>
             </div>
         </form>
 
@@ -823,7 +853,7 @@
                 </table>
             </div>
             <div class="button-wrap">
-                <button type="submit" class="button button_save">Сохранить</button>
+                <md-button type="submit" class="md-cornered button_new">Сохранить</md-button>
             </div>
         </form>
     </div>

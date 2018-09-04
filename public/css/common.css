@@ -78,6 +78,35 @@ label {
     color: #fff;
     cursor: pointer;
 }
+.md-button {
+    margin: 0;
+
+}
+md-checkbox {
+    margin-bottom: 0;
+}
+.button_new {
+    color : white;
+    background-color: #4ea63c;
+    border-radius: 10px 0 0 10px;
+    font-size: 16px;
+    padding: 0 15px;
+}
+
+md-checkbox.md-checked.checkbox_new .md-icon {
+    background-color: rgba(0, 183, 13, 0.87);
+}
+
+.button_new:not([disabled]):hover {
+    background-color: rgba(107, 103, 91, 0.96);
+    color: white;
+}
+
+.button_new[disabled] {
+    color : rgb(187, 187, 187);
+    background-color: rgba(230, 230, 229, 0.96);
+}
+
 .agreement {
     display: flex;
     align-items: center;
@@ -103,6 +132,9 @@ label {
 .report_text {
     display: block;
     color: #0094de;
+}
+.textarea {
+    min-width: 300px;
 }
 .years {
     width: 100px;

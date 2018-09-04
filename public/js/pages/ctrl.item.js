@@ -29,8 +29,11 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     $scope.role = $scope.item.template;
     console.log($scope.role);
     $scope.trim = $scope.item.trim;
+    $scope.document = $scope.item.document;
     $scope.issueNumber = /[0-9]/g;
     $scope.issueCode = new RegExp("^[a-zA-Z0-9\\s]+$");
+    $scope.data = {};
+    $scope.data.consCheck = false;
     if ($scope.item.template === 1) {
         vm.item = true;
     } else if ($scope.item.template === 1.1) {
@@ -47,18 +50,27 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     } else if ($scope.item.template === 6) {
         vm.message = true;
     } else if ($scope.item.template === 7) {
-
+        //some template
     }
-
-    vm.johny = false;
-
     console.log($scope.item.role);
-    vm.year = null;
-    vm.years = [];
 
-    for (var i = 1940; i <= 2018; i++) {
-        vm.years.push(i);
+    $scope.dates = {};
+    $scope.years = [{ val: 'Год', disabled: true }];
+    for(var i = 1993; i <= 2024; i++) {
+        $scope.years.push({val: i});
     }
+    $scope.getYearToday = function() {
+        var date = new Date();
+        var today = date.getFullYear();
+        $scope.dates.currentYear = today;
+    };
+    // vm.year = null;
+    // vm.years = [];
+    //
+    // for (var i = 1993; i <= 2018; i++) {
+    //     vm.years.push(i);
+    // }
+    // vm.currentYear = vm.years.slice(-1)[0];
 
     //Select Date
     vm.myDate = new Date();
@@ -71,19 +83,21 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
         vm.item = {
             quarter: vm.quarter,
             year: vm.year,
-            date: vm.myDate
+            date: vm.myDate,
+            comment: vm.comments
         };
         console.log(vm.item);
         //если данные не выбраны, то приходит сообщение
-        if (!vm.item.quarter || !vm.item.year || vm.consCheck === false || vm.quarterCheck === false) {
+        if (!vm.item.quarter || !vm.item.year || $scope.data.consCheck === false || !vm.comments) {
             vm.reply = {
                 msgQuarter: 'Выберите квартал',
                 msgYear: 'Выберите год',
-                msgCheck: 'Поставьте галочку'
+                msgCheck: 'Поставьте галочку',
+                msgComment: 'Оставьте комментарий'
             };
         }
 
-        if (vm.item.quarter && vm.item.year && vm.item.date && vm.consCheck === true && vm.quarterCheck === true) {
+        if (vm.item.quarter && vm.item.date && $scope.data.consCheck === true) {
             $state.go('home');
         }
 
@@ -99,19 +113,20 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
         //     console.log(error);
         // })
     };
-    vm.itemOne = function() {
+    vm.itemOne = function () {
         vm.sendOne = {
             month: vm.month,
-            year: vm.year
+            year: dates.currentYear
         };
-        if(!vm.month || !vm.year || vm.consCheck === false || vm.quarterCheck === false) {
+        console.log(vm.sendOne);
+        if (!vm.month || !vm.year || vm.consCheck === false || vm.quarterCheck === false) {
             vm.response = {
                 msgCheck: 'Выберите галочку',
                 msgMonth: 'Выберите месяц',
                 msgYear: 'Выберите год',
             }
         }
-        if(vm.consCheck === true && vm.quarterCheck === true) {
+        if (vm.consCheck === true && vm.quarterCheck === true) {
             $state.go('home');
         }
     };
@@ -311,25 +326,25 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     };
 
     vm.months = [{
-            id: 1,
-            label: 'январь-март',
-            position: 1
-        },
-        {
-            id: 2,
-            label: 'январь-июнь',
-            position: 2
-        },
-        {
-            id: 3,
-            label: 'январь-сентябрь',
-            position: 3
-        },
-        {
-            id: 4,
-            label: 'январь-декабрь',
-            position: 4
-        }];
+        id: 1,
+        label: 'январь-март',
+        position: 1
+    },
+    {
+        id: 2,
+        label: 'январь-июнь',
+        position: 2
+    },
+    {
+        id: 3,
+        label: 'январь-сентябрь',
+        position: 3
+    },
+    {
+        id: 4,
+        label: 'январь-декабрь',
+        position: 4
+    }];
 
     vm.allMonths = [{
         id: 1,
@@ -380,6 +395,32 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     {
         id: 10,
         label: 'январь-декабрь'
+    }];
+
+    vm.threeMonths = [{
+        id: 1,
+        label: 'январь-март',
+    },
+    {
+        id: 2,
+        label: 'январь-июнь'
+    },
+    {
+        id: 3,
+        label: 'январь-сентябрь'
+    }];
+
+    vm.quarters = [{
+        id: 1,
+        label: '3 месяца'
+    },
+    {
+        id: 2,
+        label: '6 месяцев'
+    },
+    {
+        id: 3,
+        label: '9 месяцев'
     }];
 
 });
