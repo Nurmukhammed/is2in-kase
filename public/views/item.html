@@ -63,14 +63,14 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-if="item.quarterSelected === 1">
                         <td>
                             <label for="quarter">
                                 За какой период
                             </label>
                         </td>
                         <td>
-                            <fieldset ng-if="item.quarterSelected === 1">
+                            <fieldset>
                                 <md-input-container>
                                     <label>Выберите</label>
                                     <md-select ng-model="vm.quarter">
@@ -85,11 +85,31 @@
                             </fieldset>
                         </td>
                     </tr>
+                    <tr ng-if="item.semiAnnual === 1">
+                        <td>
+                            <label>За какое полугодие:</label>
+                        </td>
+                        <td>
+                            <fieldset>
+                                <md-input-container>
+                                    <label>Выберите</label>
+                                    <md-select ng-model="vm.semiAnnual">
+                                        <md-option
+                                                ng-value="semi"
+                                                ng-repeat="semi in vm.semiAnnuals">{{semi.label}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <div ng-if="!vm.quarter">
+                                    {{vm.reply.msgQuarter}}
+                                </div>
+                            </fieldset>
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div>
                 <table>
-                    <tr>
+                    <tr ng-if="item.period === 1">
                         <td>Дата завершения периода:</td>
                         <td>
                             <md-content layout-padding ng-cloak>
@@ -102,6 +122,21 @@
                                 </div>
                             </md-content>
                             {{vm.myDate | date: shortDate}}
+                        </td>
+                    </tr>
+                    <tr ng-if="item.period === 2">
+                        <td>Дата завершения полугодового периода:</td>
+                        <td>
+                            <md-content layout-padding ng-cloak>
+                                <div layout-gt-xs="row">
+                                    <div flex-gt-xs>
+                                        <md-content>
+                                            <md-datepicker ng-model="vm.semiDate"  md-placeholder="Enter date"></md-datepicker>
+                                        </md-content>
+                                    </div>
+                                </div>
+                            </md-content>
+                            {{vm.semiDate | date: shortDate}}
                         </td>
                     </tr>
                     <tr>

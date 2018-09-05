@@ -85,6 +85,7 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
             quarter: vm.quarter,
             year: vm.year,
             date: vm.myDate,
+            semiDate: vm.semiDate,
             comment: vm.comments
         };
         console.log(vm.item);
@@ -424,5 +425,14 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
         id: 3,
         label: '9 месяцев'
     }];
+
+    vm.semiAnnuals = [{
+        id: 1,
+        label: 'первое полугодие'
+    },
+    {
+        id: 2,
+        label: 'второе полугодие'
+    }]
 
 });

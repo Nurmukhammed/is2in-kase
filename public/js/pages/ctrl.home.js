@@ -45,13 +45,18 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     title: 'Квартальная финансовая отчетность (для нерезидентов с нестандартными отчетными периодами)',
                     template: 1,
                     document: 0,
-                    quarterSelected: 1
+                    quarterSelected: 1,
+                    trim: null,
+                    period: 1
                 },
                 {
                     id: 6,
                     title: 'Полугодовая финансовая отчетность (для нерезидентов с нестандартными отчетными периодами)',
                     template: 1,
-                    quarter: 0
+                    document: 0,
+                    quarter: 0,
+                    semiAnnual: 1,
+                    period: 2
                 },
                 {
                     id: 7,
