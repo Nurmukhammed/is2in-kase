@@ -37,7 +37,7 @@
                 <table>
                     <tr>
                         <td>
-                            <label for="consolidate">Консолидированная</label>
+                            <label>Консолидированная</label>
                         </td>
                         <td>
                             <fieldset>
@@ -177,7 +177,7 @@
                             </fieldset>
                             <fieldset ng-if="trim === 1.1">
                                 <md-input-container>
-                                    <label>Выберите год</label>
+                                    <label>Выберите период</label>
                                     <md-select ng-model="vm.month">
                                         <md-option
                                             ng-value="month"
@@ -191,20 +191,35 @@
                                 </div>
                             </fieldset>
                             <fieldset ng-if="trim === 1.2">
-                                <select ng-model="vm.allMonth" ng-options="value.id as value.label for value in vm.allMonths | orderBy: '-position'">
-                                    <option>--</option>
-                                </select>
-                                <div ng-if="!vm.month">
+                                <md-input-container>
+                                    <label>Выберите период</label>
+                                    <md-select ng-model="vm.allMonth">
+                                        <md-option
+                                                ng-value="month"
+                                                ng-repeat="month in vm.allMonths | orderBy: '-position'">
+                                            {{month.label}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <div ng-if="!vm.allMonth">
                                     {{vm.response.msgMonth}}
                                 </div>
                             </fieldset>
                             <fieldset ng-if="trim === 1.3">
-                                <select ng-model="vm.threeMonth" ng-options="value.id as value.label for value in vm.threeMonths | orderBy: '-position'">
-                                    <option>--</option>
-                                </select>
-                                <div ng-if="!vm.month">
+                                <md-input-container>
+                                    <label>Выберите период</label>
+                                    <md-select ng-model="vm.threeMonth">
+                                        <md-option
+                                                ng-value="month"
+                                                ng-repeat="month in vm.threeMonths | orderBy: '-position'">
+                                            {{month.label}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <div ng-if="!vm.allMonth">
                                     {{vm.response.msgMonth}}
                                 </div>
+
                             </fieldset>
                         </td>
                     </tr>
@@ -214,25 +229,33 @@
                         </td>
                         <td>
                             <div>
-                                <!--<fieldset>-->
-                                    <!--<select-->
-                                        <!--ng-init="vm.year = vm.years.slice(-1)[0]"-->
-                                        <!--ng-model="vm.year"-->
-                                        <!--ng-options="year for year in vm.years"-->
-                                        <!--class="years">-->
-                                    <!--</select>-->
-                                    <!--<div ng-if="!vm.year">-->
-                                        <!--{{vm.response.msgYear}}-->
-                                    <!--</div>-->
-                                <!--</fieldset>-->
                                 <fieldset>
-                                    <select name="getDate"
-                                            ng-model="dates.currentYear" id="getDate"
-                                            ng-click="getYearToday()"
-                                            ng-options="year.val as year.val disable when year.disabled for year in years"
-                                            required>
-                                        <option value="" disabled >Выберите год</option>
-                                    </select>
+                                    <!--<select name="getDate"-->
+                                            <!--ng-model="dates.currentYear" id="getDate"-->
+                                            <!--ng-click="getYearToday()"-->
+                                            <!--ng-options="year.val as year.val disable when year.disabled for year in years"-->
+                                            <!--required>-->
+                                        <!--<option value="" disabled >Выберите год</option>-->
+                                    <!--</select>-->
+
+                                    <md-input-container>
+                                        <label>Выберите год</label>
+                                        <md-select
+                                                name="getDate"
+                                                ng-model="vm.year"
+                                                ng-click="getYearToday()">
+                                            <md-option
+                                                    ng-value="year"
+                                                    ng-repeat="year in vm.years track by $index"
+                                                    selected="{{year.val === dates.currentYear ? 'selected' : '' }}"
+                                                    >
+                                                {{year.val}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <div ng-if="!vm.allMonth">
+                                        {{vm.response.msgMonth}}
+                                    </div>
                                 </fieldset>
                             </div>
                         </td>
@@ -265,11 +288,24 @@
                             </fieldset>
                         </td>
                     </tr>
+                    <!--<tr>-->
+                        <!--<td>Комментарий:</td>-->
+                        <!--<td>-->
+                            <!--<fieldset>-->
+                                <!--<textarea class="textarea"></textarea>-->
+                            <!--</fieldset>-->
+                        <!--</td>-->
+                    <!--</tr>-->
                     <tr>
                         <td>Комментарий:</td>
                         <td>
                             <fieldset>
-                                <textarea class="textarea"></textarea>
+                                <md-input-container >
+                                    <textarea class="textarea" rows="4" ng-model="vm.comments" placeholder="Комментарий"></textarea>
+                                </md-input-container>
+                                <div ng-if="!vm.comments">
+                                    {{vm.response.msgComment}}
+                                </div>
                             </fieldset>
                         </td>
                     </tr>

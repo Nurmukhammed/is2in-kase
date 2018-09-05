@@ -55,10 +55,11 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     console.log($scope.item.role);
 
     $scope.dates = {};
-    $scope.years = [{ val: 'Год', disabled: true }];
+    vm.years = [{ val: 'Год', disabled: true }];
     for(var i = 1993; i <= 2024; i++) {
-        $scope.years.push({val: i});
+        vm.years.push({val: i});
     }
+    $scope.dateToday = new Date();
     $scope.getYearToday = function() {
         var date = new Date();
         var today = date.getFullYear();
@@ -97,7 +98,7 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
             };
         }
 
-        if (vm.item.quarter && vm.item.date && $scope.data.consCheck === true) {
+        if (vm.item.quarter && vm.item.date && $scope.data.consCheck === true && vm.comments) {
             $state.go('home');
         }
 
@@ -116,14 +117,15 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     vm.itemOne = function () {
         vm.sendOne = {
             month: vm.month,
-            year: vm.year
+            year: vm.year,
+            comments: vm.comments
         };
-        console.log(vm.sendOne);
-        if (!vm.month || !vm.year || $scope.data.consCheck === false || vm.quarterCheck === false) {
+        if (!vm.month || !vm.year || $scope.data.consCheck === false || vm.quarterCheck === false || !vm.comments) {
             vm.response = {
                 msgCheck: 'Выберите галочку',
                 msgMonth: 'Выберите месяц',
                 msgYear: 'Выберите год',
+                msgComment: 'Оставьте комментарий'
             }
         }
         if ($scope.data.consCheck === true && vm.quarterCheck === true) {
