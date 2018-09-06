@@ -27,13 +27,13 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     $scope.item = JSON.parse($state.params.item);
     $scope.text = $scope.item.title;
     $scope.role = $scope.item.template;
-    console.log($scope.role);
     $scope.trim = $scope.item.trim;
     $scope.document = $scope.item.document;
     $scope.issueNumber = /[0-9]/g;
     $scope.issueCode = new RegExp("^[a-zA-Z0-9\\s]+$");
     $scope.data = {};
     $scope.data.consCheck = false;
+    console.log($scope.item.id);
     if ($scope.item.template === 1) {
         vm.item = true;
     } else if ($scope.item.template === 1.1) {
@@ -115,12 +115,48 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
         //     console.log(error);
         // })
     };
+    vm.buttonSemiAnnual = function (){
+        vm.biAnnual = {
+            semiDate: vm.semiDate,
+            comment: vm.comments,
+            semiAnnual: vm.semiAnnual
+        };
+
+        if(vm.semiDate === undefined || !vm.commments || vm.semiAnnual === undefined) {
+            vm.messageCheck = 'Выберите галочку';
+            vm.commentSemi = 'Оставьте комментарий';
+            vm.dateSemi = 'Выберите полугодие';
+        }
+
+        if($scope.data.consCheck === true && vm.comments && vm.semiAnnual) {
+            $state.go('home');
+        }
+    };
+
+    vm.buttonAnnual = function() {
+      vm.annual = {
+          comment: vm.comments,
+          year: vm.year
+      };
+
+      if(vm.annualDate === undefined || !vm.comments) {
+          vm.checkAnnual = 'Выберите галочку';
+          vm.dateAnnual = 'Выберите год';
+          vm.commentAnnual = 'Оставьте комментарий';
+      }
+
+      if($scope.data.consCheck === true && vm.year && vm.comments) {
+          $state.go('home');
+      }
+      console.log(vm.annual);
+    };
     vm.itemOne = function () {
         vm.sendOne = {
             month: vm.month,
             year: vm.year,
             comments: vm.comments
         };
+
         if (!vm.month || !vm.year || $scope.data.consCheck === false || vm.quarterCheck === false || !vm.comments) {
             vm.response = {
                 msgCheck: 'Выберите галочку',
@@ -129,6 +165,7 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
                 msgComment: 'Оставьте комментарий'
             }
         }
+
         if ($scope.data.consCheck === true && vm.quarterCheck === true) {
             $state.go('home');
         }
@@ -156,30 +193,6 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
         }
     };
 
-    vm.protocols = [{
-        id: 1,
-        label: "внеочерднего"
-    }, {
-        id: 2,
-        label: "созываемое"
-    }];
-
-    vm.types = [{
-        id: 1,
-        label: 'Выписка из протокола'
-    }, {
-        id: 2,
-        label: 'Выписка из протокола 2'
-    }];
-
-    vm.holders = [{
-        id: 1,
-        label: 'Акционеров'
-    }, {
-        id: 2,
-        label: 'Акционеров 2'
-    }];
-
     vm.board = function () {
         if (!vm.protocol || !vm.type || !vm.holder) {
             vm.msgProtocol = 'Выбирите тип собрания';
@@ -193,38 +206,10 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
             boardDate: vm.boardDate,
             publishDate: vm.publishDate
         };
-        console.log(vm.send);
         if (vm.protocol && vm.type && vm.holder) {
             $state.go('home');
         }
     };
-
-    vm.equityChanges = [{
-        id: 1,
-        label: 'Изменения и дополнения '
-    }, {
-        id: 1,
-        label: 'Изменения и дополнения 2'
-    }];
-
-    vm.equityIssues = [{
-        id: 1,
-        label: '1'
-    }, {
-        id: 2,
-        label: '2'
-    }];
-
-    vm.bondChanges = [{
-        id: 1,
-        label: '1'
-    }, {
-        id: 2,
-        label: '2'
-    }, {
-        id: 3,
-        label: '3'
-    }];
 
     vm.stock = function () {
         vm.send = {
@@ -261,47 +246,6 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
             $state.go('home');
         }
     };
-
-    vm.typesInfo = [{
-        id: 1,
-        label: 'купонным'
-    }, {
-        id: 2,
-        label: 'купонным 2'
-    }];
-
-    vm.catsInfo = [{
-        id: 1,
-        label: "первая подкатегория категории 'Долговые ценные бумаги без рейтинговой оценки'"
-    }, {
-        id: 2,
-        label: 'первая подкатегория категории \'Долговые ценные бумаги без рейтинговой оценки 2'
-    }];
-
-    vm.infoNumbers = [{
-        id: 1,
-        label: '1'
-    }, {
-        id: 2,
-        label: '2'
-    }, {
-        id: 3,
-        label: '3'
-    }, {
-        id: 4,
-        label: '4'
-    }];
-
-    vm.infoCurrencies = [{
-        id: 1,
-        label: 'тенге'
-    }, {
-        id: 2,
-        label: 'доллар'
-    }, {
-        id: 3,
-        label: 'рубль'
-    }];
 
     vm.info = function () {
         vm.process = {
@@ -433,6 +377,97 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
     {
         id: 2,
         label: 'второе полугодие'
-    }]
+    }];
+
+    vm.typesInfo = [{
+        id: 1,
+        label: 'купонным'
+    }, {
+        id: 2,
+        label: 'купонным 2'
+    }];
+
+    vm.catsInfo = [{
+        id: 1,
+        label: "первая подкатегория категории 'Долговые ценные бумаги без рейтинговой оценки'"
+    }, {
+        id: 2,
+        label: 'первая подкатегория категории \'Долговые ценные бумаги без рейтинговой оценки 2'
+    }];
+
+    vm.infoNumbers = [{
+        id: 1,
+        label: '1'
+    }, {
+        id: 2,
+        label: '2'
+    }, {
+        id: 3,
+        label: '3'
+    }, {
+        id: 4,
+        label: '4'
+    }];
+
+    vm.infoCurrencies = [{
+        id: 1,
+        label: 'тенге'
+    }, {
+        id: 2,
+        label: 'доллар'
+    }, {
+        id: 3,
+        label: 'рубль'
+    }];
+    vm.equityChanges = [{
+        id: 1,
+        label: 'Изменения и дополнения '
+    }, {
+        id: 1,
+        label: 'Изменения и дополнения 2'
+    }];
+
+    vm.equityIssues = [{
+        id: 1,
+        label: '1'
+    }, {
+        id: 2,
+        label: '2'
+    }];
+
+    vm.bondChanges = [{
+        id: 1,
+        label: '1'
+    }, {
+        id: 2,
+        label: '2'
+    }, {
+        id: 3,
+        label: '3'
+    }];
+
+    vm.protocols = [{
+        id: 1,
+        label: "внеочерднего"
+    }, {
+        id: 2,
+        label: "созываемое"
+    }];
+
+    vm.types = [{
+        id: 1,
+        label: 'Выписка из протокола'
+    }, {
+        id: 2,
+        label: 'Выписка из протокола 2'
+    }];
+
+    vm.holders = [{
+        id: 1,
+        label: 'Акционеров'
+    }, {
+        id: 2,
+        label: 'Акционеров 2'
+    }];
 
 });

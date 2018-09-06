@@ -36,16 +36,45 @@
             <div>
                 <table>
                     <tr>
-                        <td>
+                        <td ng-if="item.consolidate === 1">
                             <label>Консолидированная</label>
+                        </td>
+                        <td ng-if="item.audit === 1 && item.id === 9">
+                            <label>Консолидированный</label>
                         </td>
                         <td>
                             <fieldset>
-                                <md-checkbox ng-model="data.consCheck" class="checkbox_new"></md-checkbox>
+                                <md-checkbox ng-model="data.consCheck" class="checkbox_new" aria-label="true"></md-checkbox>
                             </fieldset>
                             <div ng-if="!data.consCheck">
                                 {{vm.reply.msgCheck}}
+                                {{vm.messageCheck}}
+                                {{vm.checkAnnual}}
                             </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="item.annual === 1">
+                        <td>Год</td>
+                        <td>
+                            <fieldset>
+                                <md-input-container>
+                                    <label>Выберите год</label>
+                                    <md-select
+                                            name="getDate"
+                                            ng-model="vm.year"
+                                            ng-click="getYearToday()">
+                                        <md-option
+                                                ng-value="year"
+                                                ng-repeat="year in vm.years track by $index"
+                                                selected="{{year.val === dates.currentYear ? 'selected' : '' }}" >
+                                            {{year.val}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <div ng-if="!vm.year">
+                                    {{vm.dateAnnual}}
+                                </div>
+                            </fieldset>
                         </td>
                     </tr>
                     <tr ng-if="item.quarter === 1">
@@ -99,8 +128,8 @@
                                                 ng-repeat="semi in vm.semiAnnuals">{{semi.label}}</md-option>
                                     </md-select>
                                 </md-input-container>
-                                <div ng-if="!vm.quarter">
-                                    {{vm.reply.msgQuarter}}
+                                <div ng-if="!vm.semiAnnual">
+                                    {{vm.dateSemi}}
                                 </div>
                             </fieldset>
                         </td>
@@ -160,14 +189,22 @@
                                 </md-input-container>
                                 <div ng-if="!vm.comments">
                                     {{vm.reply.msgComment}}
+                                    {{vm.commentSemi}}
+                                    {{vm.commentAnnual}}
                                 </div>
                             </fieldset>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div class="button-wrap">
+            <div class="button-wrap" ng-if="item.semiAnnual === null">
                 <md-button type="submit" class="md-cornered button_new">Сохранить</md-button>
+            </div>
+            <div ng-if="item.semiAnnual === 1" class="button-wrap">
+                <md-button ng-click="vm.buttonSemiAnnual()" class="md-cornered button_new">Сохранить</md-button>
+            </div>
+            <div ng-if="item.annual === 1 && item.id === 7 || item.annual === 1 && item.id === 8" class="button-wrap">
+                <md-button ng-click="vm.buttonAnnual()" class="md-cornered button_new">Сохранить</md-button>
             </div>
         </form>
 
@@ -180,7 +217,7 @@
                         </td>
                         <td>
                             <fieldset>
-                                <md-checkbox ng-model="data.consCheck" class="checkbox_new"></md-checkbox>
+                                <md-checkbox ng-model="data.consCheck" class="checkbox_new" aria-label="true"></md-checkbox>
                             </fieldset>
                             <div ng-if="!data.consCheck">
                                 {{vm.response.msgCheck}}

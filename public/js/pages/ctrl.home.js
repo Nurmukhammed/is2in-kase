@@ -17,37 +17,51 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     title: 'Квартальная финансовая отчетность',
                     template: 1.1,
                     trim: 1,
-                    document: 1
+                    document: 1,
+                    quarterSelected: null,
+                    period: null,
+                    semiAnnual: null
                 },
                 {
                     id: 2,
                     title: 'Пояснительная записка к квартальной финансовой отчетности',
                     template: 1.1,
                     trim: 1.1,
-                    document: 0
+                    document: 0,
+                    quarterSelected: null,
+                    period: null,
+                    semiAnnual: null
                 },
                 {
                     id: 3,
                     title: 'Неполная периодическая финансовая отчетность для организаций членов Биржи',
                     template: 1.1,
                     trim: 1.2,
-                    document: 1
+                    document: 1,
+                    quarterSelected: null,
+                    period: null,
+                    semiAnnual: null
                 },
                 {
                     id: 4,
                     title: 'Отчет по обзору финансовой отчетности',
                     template: 1.1,
                     trim: 1.3,
-                    document: 0
+                    document: 0,
+                    quarterSelected: null,
+                    period: null,
+                    semiAnnual: null
                 },
                 {
                     id: 5,
                     title: 'Квартальная финансовая отчетность (для нерезидентов с нестандартными отчетными периодами)',
                     template: 1,
+                    trim: null,
                     document: 0,
                     quarterSelected: 1,
-                    trim: null,
-                    period: 1
+                    period: 1,
+                    semiAnnual: null,
+                    consolidate: 1
                 },
                 {
                     id: 6,
@@ -55,24 +69,47 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     template: 1,
                     document: 0,
                     quarter: 0,
+                    quarterSelected: null,
+                    period: 2,
+                    annual: null,
                     semiAnnual: 1,
-                    period: 2
+                    consolidate: 1
                 },
                 {
                     id: 7,
                     title: 'Годовая финансовая отчетность',
                     template: 1,
-                    quarter: 1
+                    document: 0,
+                    quarter: 0,
+                    quarterSelected: null,
+                    semiAnnual: 0,
+                    annual: 1,
+                    period: 0,
+                    consolidate: 1
                 },
                 {
                     id: 8,
                     title: 'Пояснительная записка к годовой финансовой отчетности',
-                    template: 1
+                    template: 1,
+                    document: 0,
+                    quarter: 0,
+                    quarterSelected: null,
+                    semiAnnual: 0,
+                    annual: 1,
+                    period: 0,
+                    consolidate: 1
                 },
                 {
                     id: 9,
                     title: 'Аудиторский отчет',
-                    template: 1
+                    template: 1,
+                    document: 0,
+                    quarter: 0,
+                    quarterSelected: null,
+                    semiAnnual: 0,
+                    annual: 1,
+                    period: 0,
+                    audit: 1,
                 },
                 {
                     id: 10,
