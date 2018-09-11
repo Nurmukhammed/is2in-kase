@@ -28,6 +28,9 @@ label {
 .red {
     color : #cc6666;
 }
+body.md-default-theme, body, html.md-default-theme, html {
+    background-color: #fff;
+}
 .topbar {
     width: 100%;
     display: flex;
@@ -188,7 +191,7 @@ md-checkbox.md-checked.checkbox_new .md-icon {
 .angular-ui-tree-handle {
     text-transform: capitalize;
 }
-.common {
+.unplanned {
     padding: 8px;
 }
 .default {

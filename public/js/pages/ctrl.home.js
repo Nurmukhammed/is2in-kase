@@ -1,16 +1,12 @@
 var app = angular.module('Home', []);
 
-app.config(function(treeConfig) {
-    treeConfig.defaultCollapsed = true; // collapse nodes by default
-    treeConfig.appendChildOnHover = true; // append dragged nodes as children by default
-});
-
 app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
     var vm = this;
     vm.report = [
         {
             id: 1,
             title: 'Периодичная отчетность',
+            status: 0,
             groups : [
                 {
                     id: 1,
@@ -246,6 +242,7 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
         {
             id: 2,
             title: 'проспекты',
+            status: 1,
             groups: [
                 {
                     id: 1,
@@ -282,6 +279,7 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
         {
             id: 3,
             title: 'учредительные документы',
+            status: 1,
             groups: [
                 {
                     id: 1,
@@ -308,6 +306,7 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
         {
             id: 4,
             title: 'протоколы',
+            status: 1,
             groups: [
                 {
                     id: 1,
@@ -329,6 +328,7 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
         {
             id: 5,
             title: 'корпоративные события',
+            status: 1,
             groups: [
                 {
                     id: 1,
@@ -345,6 +345,7 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
         {
             id: 6,
             title: 'новости',
+            status: 1,
             groups: [
                 {
                     id: 1,
@@ -385,6 +386,7 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
         }
     ];
 
+
     vm.docs = [{
         id: 1,
         title: 'Пресс-релиз',
@@ -395,53 +397,6 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
         publishDate: '22.08.2018'
     }];
 
-    $scope.remove = function(scope) {
-        scope.remove();
-    };
-
-    $scope.toggle = function(scope) {
-        scope.toggle();
-    };
-
-    $scope.moveLastToTheBeginning = function() {
-        var a = $scope.data.pop();
-        $scope.data.splice(0, 0, a);
-    };
-
-    $scope.addSubItem = function(scope) {
-        var nodeData = scope.$modelValue;
-        nodeData.groups.push({
-            id: nodeData.id * 10 + nodeData.groups.length,
-            title: nodeData.title + '.' + (nodeData.groups.length + 1),
-            groups: []
-        });
-    };
-
-    $scope.collapseAll = function() {
-        $scope.$broadcast('angular-ui-tree:collapse-all');
-    };
-
-    $scope.expandAll = function() {
-        console.log('Some way');
-        $scope.$broadcast('angular-ui-tree:expand-all');
-    };
-
-    $scope.startScanner = function() {
-        $rootScope.$broadcast('scanner-started');
-    };
-    $scope.$on('scanner-started', function(event, args) {
-        console.log('scanner received');
-    });
-
-    $scope.$parentNodeScope = function() {
-        if (isChild()) {
-            console.log('I have a child');
-        }
-    };
-
-    $scope.$childNodesScope = function() {
-        console.log("I'm a child");
-    }
-
-
 });
+
+
