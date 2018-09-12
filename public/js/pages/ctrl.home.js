@@ -16,7 +16,8 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     document: 1,
                     quarterSelected: null,
                     period: null,
-                    semiAnnual: null
+                    semiAnnual: null,
+                    check: true
                 },
                 {
                     id: 2,
@@ -26,7 +27,8 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     document: 0,
                     quarterSelected: null,
                     period: null,
-                    semiAnnual: null
+                    semiAnnual: null,
+                    check: true
                 },
                 {
                     id: 3,
@@ -36,7 +38,8 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     document: 1,
                     quarterSelected: null,
                     period: null,
-                    semiAnnual: null
+                    semiAnnual: null,
+                    check: true
                 },
                 {
                     id: 4,
@@ -46,7 +49,8 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     document: 0,
                     quarterSelected: null,
                     period: null,
-                    semiAnnual: null
+                    semiAnnual: null ,
+                    check: true
                 },
                 {
                     id: 5,
@@ -57,7 +61,8 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     quarterSelected: 1,
                     period: 1,
                     semiAnnual: null,
-                    consolidate: 1
+                    consolidate: 1,
+                    check: true
                 },
                 {
                     id: 6,
@@ -69,7 +74,8 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     period: 2,
                     annual: null,
                     semiAnnual: 1,
-                    consolidate: 1
+                    consolidate: 1,
+                    check: true
                 },
                 {
                     id: 7,
@@ -81,7 +87,8 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     semiAnnual: 0,
                     annual: 1,
                     period: 0,
-                    consolidate: 1
+                    consolidate: 1,
+                    check: true
                 },
                 {
                     id: 8,
@@ -93,7 +100,8 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     semiAnnual: 0,
                     annual: 1,
                     period: 0,
-                    consolidate: 1
+                    consolidate: 1,
+                    check: true
                 },
                 {
                     id: 9,
@@ -106,11 +114,16 @@ app.controller('HomeCtrl', function($http, $scope, $state, $rootScope) {
                     annual: 1,
                     period: 0,
                     audit: 1,
+                    annualState: 0,
+                    check: true
                 },
                 {
                     id: 10,
                     title: 'Годовой отчет',
-                    template: 1
+                    template: 1,
+                    document: 0,
+                    annualState: 1,
+                    check: false
                 },
                 {
                     id: 11,

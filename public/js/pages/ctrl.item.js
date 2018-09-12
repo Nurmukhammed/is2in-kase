@@ -272,6 +272,20 @@ app.controller('ItemCtrl', function ($http, $scope, $state, $log) {
         }
     };
 
+    vm.buttonAnnualState = function() {
+        vm.annualSend = {
+            comment: vm.comments,
+            year: vm.year
+        };
+        console.log(vm.annualSend);
+        if(!vm.comments || !vm.year) {
+            vm.msgComment = 'Оставьте комментарий';
+        }
+        if(vm.comments && vm.year) {
+            $state.go('home');
+        }
+    };
+
     vm.months = [{
         id: 1,
         label: 'январь-март',
